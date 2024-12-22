@@ -13,6 +13,9 @@ require("dotenv").config();
 const app = express();
 const port = process.env.APP_PORT;
 
+// Helper File
+const db = require("./helpers/db");
+
 // Import Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -37,6 +40,15 @@ app.use(function (req, res, next) {
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+app.get("/blog", async (req, res) => {
+  await db.query(`SELECT * FROM blog`, (err, resu, field) => {
+    if (err) {
+      res.redirect("/");
+    } else {
+      res.render("blog", { post: resu });
+    }
+  });
 });
 
 // Start the Server on Port

@@ -29,6 +29,7 @@
 
 .navbar .navbar-nav {
   display: flex;
+  align-items: center;
   flex-wrap: nowrap;
 }
 .navbar .navbar-nav a {
@@ -36,18 +37,23 @@
   display: inline-block;
   font-size: 1.3rem;
   margin: 0 1rem;
+
   font-family: var(--body-font);
 }
-
+.navbar .navbar-nav a.btn {
+  background: var(--blue);
+  color: var(--white);
+  padding: 5px 20px;
+}
 .navbar .navbar-nav a:hover {
-  color: var(--blue);
+  color: var(--white);
 }
 
 .navbar .navbar-nav a::after {
   content: "";
   display: block;
   padding-bottom: 0.5rem;
-  border-bottom: 0.1rem solid var(--blue);
+  border-bottom: 0.1rem solid var(--white);
   transform: scaleX(0);
   transition: 0.2s linear;
 }
@@ -80,7 +86,7 @@
     font-size: 25px;
   }
   .navbar .navbar-nav {
-    margin-left: 24vw;
+    margin-left: 22vw;
   }
   .navbar-logo span {
     margin-left: 3px;

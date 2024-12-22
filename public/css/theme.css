@@ -28,11 +28,19 @@ label {
 }
 p,
 ul,
-li {
+li,
+span {
   font-family: var(--body-font);
 }
 button {
+  padding: 20px 40px;
+  background: rgb(62, 53, 190);
+  color: aliceblue;
+  font-weight: 500;
   text-transform: capitalize;
+}
+button.small {
+  padding: 10px 20px;
 }
 a {
   text-decoration: none;
