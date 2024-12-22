@@ -1,0 +1,39 @@
+:root {
+  --heading-font: "Sansita", sans-serif;
+  --body-font: "PT Sans", sans-serif;
+  --white: aliceblue;
+  --blue: rgb(62, 53, 190);
+}
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+}
+html {
+  overflow-x: hidden;
+}
+body {
+  background-color: aliceblue;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+  font-family: var(--heading-font);
+  text-transform: capitalize;
+}
+p,
+ul,
+li {
+  font-family: var(--body-font);
+}
+button {
+  text-transform: capitalize;
+}
+a {
+  text-decoration: none;
+}
