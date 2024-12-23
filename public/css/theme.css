@@ -1,6 +1,8 @@
 :root {
   --heading-font: "Sansita", sans-serif;
   --body-font: "PT Sans", sans-serif;
+  --section-width: calc(100vw - 100px);
+  --section-width-mobile: calc(100vw - 50px);
   --white: aliceblue;
   --blue: rgb(62, 53, 190);
 }

@@ -13,7 +13,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.APP_PORT;
 
-// Helper File
+// Import Helper File
 const db = require("./helpers/db");
 
 // Import Middleware
