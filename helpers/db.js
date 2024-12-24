@@ -1,11 +1,11 @@
 const mysql = require("mysql");
 require("dotenv").config();
 
-// console.log(process.env.DB_user, process.env.DB_pass);
+// Create Mysql Connection
 const db = mysql.createConnection({
-  host: process.env.DB_host,
-  user: process.env.DB_user,
-  password: process.env.DB_pass,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: "indahlia",
 });
 

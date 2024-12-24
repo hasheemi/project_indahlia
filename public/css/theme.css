@@ -3,6 +3,10 @@
   --body-font: "PT Sans", sans-serif;
   --section-width: calc(100vw - 100px);
   --section-width-mobile: calc(100vw - 50px);
+  --content-size-mobile: 13px;
+  --heading-sec-size: 4vw;
+  --heading-sec-size-pad: 40px;
+  --heading-sec-size-mobile: 8vw;
   --white: aliceblue;
   --blue: rgb(62, 53, 190);
 }
@@ -30,6 +34,7 @@ label {
 }
 p,
 ul,
+ol,
 li,
 span {
   font-family: var(--body-font);
@@ -46,4 +51,38 @@ button.small {
 }
 a {
   text-decoration: none;
+}
+section.layout {
+  width: var(--section-width);
+  margin: 30px auto;
+}
+.layout h2 {
+  font-size: var(--heading-sec-size);
+}
+
+/* Styling for Tablet and IPad */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  section.layout {
+    width: var(--section-width);
+  }
+  .layout h2 {
+    font-size: var(--heading-sec-size-pad);
+  }
+  .layout p {
+    font-size: var(--content-size-mobile);
+    margin: 20px 0;
+  }
+}
+/* Styling for Handphone */
+@media only screen and (max-width: 600px) {
+  section.layout {
+    width: var(--section-width-mobile);
+  }
+  .layout h2 {
+    font-size: var(--heading-sec-size-mobile);
+  }
+  .layout p {
+    font-size: var(--content-size-mobile);
+    margin: 20px 0;
+  }
 }

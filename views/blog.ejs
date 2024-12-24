@@ -18,7 +18,9 @@
     <link rel="stylesheet" href="/css/theme.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="/css/footer.css" />
-    <title>blog</title>
+    <title>
+      Blog Indahlia: Buka Wawasan Seputar Dunia Lingkungan Hidup Terkini
+    </title>
   </head>
   <body>
     <%- include('components/navbar') %>
@@ -32,11 +34,12 @@
         </p>
       </div>
     </div>
-    <section class="head">
+    <section class="layout head">
       <div class="left">
         <div class="post">
           <img src="/img/irigasi.jpg" alt="" />
           <div class="desc">
+            <span class="category">Economy</span>
             <h4>Kementerian PUPR Optimistis Bangun Irigasi 1 Juta Hektare</h4>
             <p>
               Kementerian Pekerjaan Umum dan Perumahan Rakyat (PUPR) menargetkan
@@ -49,6 +52,7 @@
       </div>
       <div class="right">
         <h3>kategori</h3>
+        <div class="line"></div>
         <ul class="labels">
           <li>bencana</li>
           <li>inovasi</li>
@@ -58,27 +62,38 @@
         </ul>
       </div>
     </section>
-    <section class="middle">
-      <div class="search-con">
-        <input
-          type="text"
-          placeholder="Cari Artikel Terkini"
-          class="search-bar"
-          aria-label="Search"
-        />
-        <button class="search-button"><i class="bi bi-search"></i></button>
+    <section class="layout tools">
+      <div class="top">
+        <div class="switch">
+          <span>Terbaru</span>
+          <span>Populer</span>
+        </div>
+        <div class="search">
+          <input
+            type="text"
+            placeholder="Cari Artikel Terkini"
+            class="search-bar"
+            aria-label="Search"
+          />
+          <button class="search-button"><i class="bi bi-search"></i></button>
+        </div>
       </div>
-      <h2>artikel terbaru</h2>
+      <h3>artikel terbaru</h3>
     </section>
 
-    <section class="main">
+    <section class="layout main">
       <% post.forEach(e => { %>
       <div class="post" id="<%= e.id %>">
         <a href="<%= `/blog/post/${e.slug}&${e.id}` %>">
           <img src="<%= e.img %>" alt="" />
           <div class="desc">
+            <span class="category">Economy</span>
             <h4><%= e.judul %></h4>
-            <p><%= e.cuplikan %></p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id quia
+              facere tempora hic sit.
+            </p>
+            <span class="author">@Hasheemi</span>
           </div>
         </a>
       </div>
@@ -87,8 +102,13 @@
         <a href="<%= `/blog/post/${e.slug}&${e.id}` %>">
           <img src="<%= e.img %>" alt="" />
           <div class="desc">
+            <span class="category">Economy</span>
             <h4><%= e.judul %></h4>
-            <p><%= e.cuplikan %></p>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem unde
+              ullam dolor tenetur facilis!
+            </p>
+            <span class="author">@Hasheemi</span>
           </div>
         </a>
       </div>

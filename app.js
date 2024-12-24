@@ -15,6 +15,7 @@ const port = process.env.APP_PORT;
 
 // Import Helper File
 const db = require("./helpers/db");
+const bucket = require("./helpers/bucket");
 
 // Import Middleware
 app.use(cors());
@@ -38,6 +39,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Main App Route
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -48,6 +50,15 @@ app.get("/blog", async (req, res) => {
     } else {
       res.render("blog", { post: resu });
     }
+  });
+});
+
+// Content Route from S3 Bucket
+app.get("/cdn/:file", (req, res) => {
+  bucket.readObject(req.params.file, async (err, data) => {
+    if (err) res.status(404).send("file not found");
+    res.type(req.params.file.split(".")[1]);
+    res.send(data.buffer);
   });
 });
 
