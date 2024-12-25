@@ -1,0 +1,121 @@
+.hero {
+  color: aliceblue;
+  width: 100vw;
+  min-height: 60vh;
+  background-image: linear-gradient(
+      to bottom,
+      rgb(0, 0, 0),
+      rgba(0, 0, 0, 0.342) 55%,
+      rgb(0, 0, 0)
+    ),
+    url("/img/background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.hero .content {
+  margin: 0 auto;
+  padding: 70px;
+  width: 50%;
+}
+.main {
+  display: flex;
+  gap: 5%;
+}
+.main .left {
+  width: 70%;
+}
+.main .left h1 {
+  font-size: 3vw;
+  text-wrap: balance;
+  width: 75%;
+  margin: 10px 0;
+}
+.main .left h3 {
+  font-size: 30px;
+  margin: 20px 0;
+}
+.main .left .bread {
+  display: flex;
+  width: 20%;
+  justify-content: start;
+  gap: 10px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+.main .left .meta {
+  margin: 10px 0 20px;
+  display: block;
+  font-weight: 200;
+  color: rgb(95, 91, 91);
+}
+.main .left img {
+  max-height: 400px;
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+.main .left p {
+  margin: 10px 0;
+}
+.main .right {
+  width: 30%;
+}
+.main .right h3 {
+  font-size: 30px;
+  margin: 20px 0;
+}
+.main .right .post {
+  width: 100%;
+}
+.main .right img {
+  width: 100%;
+}
+.main .right h4 {
+  font-size: 20px;
+  width: 75%;
+}
+.main .right .post {
+  margin: 20px 0;
+}
+@media screen and (max-width: 1024px) {
+  .hero {
+    min-height: 50vh;
+  }
+
+  .hero .content {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+.share-buttons {
+  display: flex;
+  gap: 10px;
+}
+.share-buttons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 50px;
+  border-radius: 10px;
+  /* margin: 5px; */
+
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.share-whatsapp {
+  background-color: #25d366;
+}
+.share-facebook {
+  background-color: #1877f2;
+}
+.share-x {
+  background-color: #1da1f2;
+}
+.share-pinterest {
+  background-color: #e60023;
+}
+.share-copy {
+  background-color: #6c757d;
+}

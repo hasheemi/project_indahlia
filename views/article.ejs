@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('components/exstyles') %>
+    <link rel="stylesheet" href="/css/article.css" />
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <title><%= data[0].judul %></title>
+  </head>
+  <body>
+    <%- include('components/navbar') %>
+    <input type="hidden" id="url" value="<%= data[0].isi %>" />
+    <div class="hero">
+      <div class="content"></div>
+    </div>
+    <section class="layout main">
+      <div class="left">
+        <img src="<%= data[0].img %>" alt="Gambar <%= data[0].judul %>" />
+        <div class="bread">
+          <span>Home</span>
+          <span><i class="bi bi-chevron-right"></i></span>
+          <span>World</span>
+        </div>
+        <h1><%= data[0].judul %></h1>
+        <span class="meta"
+          >Diposting oleh Hasheeemi &bull; 24 Desember 2024</span
+        >
+        <div class="content"></div>
+        <h3>bagikan artikel ini</h3>
+        <div class="share-buttons">
+          <a
+            href="https://wa.me/?text=Check+out+this+awesome+page:+https://example.com"
+            target="_blank"
+            class="share-whatsapp"
+            title="Share on WhatsApp"
+          >
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <a
+            href="https://www.facebook.com/sharer/sharer.php?u=https://example.com"
+            target="_blank"
+            class="share-facebook"
+            title="Share on Facebook"
+          >
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a
+            href="https://twitter.com/intent/tweet?url=https://example.com&text=Check+out+this+awesome+page"
+            target="_blank"
+            class="share-x"
+            title="Share on X"
+          >
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a
+            href="https://pinterest.com/pin/create/button/?url=https://example.com"
+            target="_blank"
+            class="share-pinterest"
+            title="Share on Pinterest"
+          >
+            <i class="bi bi-pinterest"></i>
+          </a>
+          <a
+            href="#"
+            class="share-copy"
+            title="Copy URL"
+            onclick="copyToClipboard()"
+          >
+            <i class="bi bi-clipboard"></i>
+          </a>
+        </div>
+      </div>
+      <div class="right">
+        <h3>Artikel Terkait</h3>
+        <div class="container"></div>
+      </div>
+    </section>
+    <%- include('components/footer') %>
+    <script src="/js/navbar.js"></script>
+    <script>
+      window.onload = async () => {
+        let url = document.querySelector("input#url").value;
+        let main = document.querySelector(".main .left .content");
+        let req = await fetch(url);
+        let res = await req.text();
+        let full = res.split("\n");
+        full.forEach((e) => {
+          main.innerHTML += `<p>${e}</p>`;
+        });
+
+        let container = document.querySelector(".main .right .container");
+        let relatedurl = await fetch("/blog/related");
+        let resrelated = await relatedurl.json();
+        resrelated.forEach((e) => {
+          container.innerHTML += `
+          <div class="post" id="">
+        <a href="/blog/post/${e.slug}&${e.id}">
+          <img src="${e.img}" alt="" />
+          <div class="desc">
+            <h4>${e.judul}</h4>
+          </div>
+        </a>
+      </div>
+          `;
+        });
+      };
+    </script>
+  </body>
+</html>

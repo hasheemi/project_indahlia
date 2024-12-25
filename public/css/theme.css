@@ -39,6 +39,9 @@ li,
 span {
   font-family: var(--body-font);
 }
+img {
+  object-fit: cover;
+}
 button {
   padding: 20px 40px;
   background: rgb(62, 53, 190);
@@ -51,6 +54,7 @@ button.small {
 }
 a {
   text-decoration: none;
+  color: unset;
 }
 section.layout {
   width: var(--section-width);

@@ -44,11 +44,33 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 app.get("/blog", async (req, res) => {
-  await db.query(`SELECT * FROM blog`, (err, resu, field) => {
+  let query = "SELECT * FROM blog";
+  await db.query(query, (err, resu, field) => {
     if (err) {
       res.redirect("/");
     } else {
       res.render("blog", { post: resu });
+    }
+  });
+});
+app.get("/blog/post/:slug&:id", async (req, res) => {
+  let query = "SELECT * FROM blog WHERE slug = ? AND id = ?";
+  let values = [req.params.slug, req.params.id];
+  await db.query(query, values, (err, resu, field) => {
+    if (err || resu.length == 0) {
+      res.redirect("/");
+    } else {
+      res.render("article", { data: resu });
+    }
+  });
+});
+app.get("/blog/related", async (req, res) => {
+  let query = "SELECT * FROM blog";
+  await db.query(query, (err, resu, field) => {
+    if (err) {
+      res.json({ error: 404 });
+    } else {
+      res.json(resu);
     }
   });
 });
