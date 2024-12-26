@@ -1,0 +1,234 @@
+.hero {
+  color: aliceblue;
+  width: 100vw;
+  min-height: 80vh;
+  background-image: linear-gradient(
+      to bottom,
+      rgb(0, 0, 0),
+      rgba(0, 0, 0, 0.342) 55%,
+      rgb(0, 0, 0)
+    ),
+    url("/img/background/blog_hero.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  margin: auto;
+}
+.hero .content {
+  margin: auto;
+  padding: 70px;
+  width: 60%;
+  /* text-align: center; */
+}
+.hero h1 {
+  font-family: var(--heading-font);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 80px;
+  text-align: center;
+  text-transform: capitalize;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.493);
+  margin-top: 50px;
+  /* width: 90%; */
+}
+.hero p {
+  display: block;
+  margin: 30px auto;
+  font-family: var(--body-font);
+  font-size: 15px;
+  width: 70%;
+  text-align: center;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.411);
+}
+.tools .top {
+  display: flex;
+  gap: 10%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tools .search {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+
+.tools .search-bar {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+  width: 90%;
+}
+
+.tools .search-button {
+  padding: 10px 20px;
+  border: 2px solid var(--blue);
+  background-color: var(--blue);
+  color: white;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tools .search-button i {
+  font-size: 18px;
+  display: block;
+  text-align: center;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.container .card {
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 27%;
+}
+
+.container .card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.container .card-content {
+  padding: 16px;
+}
+
+.container .author {
+  color: #007bff;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.container .card h3 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.container .info {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.container .rating {
+  font-size: 14px;
+  color: #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.promotion {
+  min-height: 400px;
+  display: flex;
+  gap: 3%;
+  margin-top: 50px !important;
+}
+.promotion .feature {
+  width: 40%;
+  height: 400px;
+  background: var(--white);
+}
+.promotion .feature h2 {
+  font-size: 35px;
+  width: 80%;
+}
+.promotion .feature p {
+  margin: 10px 0;
+  width: 70%;
+}
+.feature ul {
+  list-style-type: none; /* Remove default bullets */
+  padding-left: 0;
+  counter-reset: step;
+}
+
+.feature ul {
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+.feature li {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+.feature li::before {
+  content: " ";
+  counter-increment: step; /* Automatically increment the counter */
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #4caf50; /* Default color, can be customized */
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  margin-right: 15px;
+  font-weight: bold;
+}
+.promotion .review {
+  width: 25%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5%;
+  /* padding: ; */
+}
+
+.promotion .review .review-card {
+  background-color: white;
+  height: 45%;
+  padding: 10px 20px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.promotion .review p {
+  margin: 10px 0;
+  font-size: 13px;
+}
+.promotion .review .star {
+  margin: 10px 0;
+  color: rgb(235, 235, 11);
+}
+.promotion .review span {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 10px 0;
+}
+.promotion .review span i {
+  /* font-size: ; */
+  font-weight: 200;
+  font-style: normal;
+  color: grey;
+}
+.promotion .quote {
+  width: 30%;
+  height: 400px;
+}
+.promotion .quote img {
+  width: 100%;
+  height: 60%;
+  margin-bottom: 30px;
+}
+.promotion .quote blockquote {
+  padding: 10px 20px;
+  background: white;
+  font-weight: 200;
+}
+.promotion .quote blockquote span {
+  display: block;
+  margin: 5px 0;
+  font-weight: 700;
+}

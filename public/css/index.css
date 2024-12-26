@@ -193,7 +193,7 @@ body {
   text-align: right;
 }
 .workshop .bottom {
-  width: (100%);
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   margin-top: 20px;

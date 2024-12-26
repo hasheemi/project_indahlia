@@ -36,8 +36,12 @@ p,
 ul,
 ol,
 li,
-span {
+span,
+blockquote {
   font-family: var(--body-font);
+}
+blockquote {
+  font-style: italic;
 }
 img {
   object-fit: cover;

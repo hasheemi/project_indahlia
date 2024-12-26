@@ -43,6 +43,8 @@ app.use(function (req, res, next) {
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+// Route For Blog Page
 app.get("/blog", async (req, res) => {
   let query = "SELECT * FROM blog";
   await db.query(query, (err, resu, field) => {
@@ -53,6 +55,7 @@ app.get("/blog", async (req, res) => {
     }
   });
 });
+
 app.get("/blog/post/:slug&:id", async (req, res) => {
   let query = "SELECT * FROM blog WHERE slug = ? AND id = ?";
   let values = [req.params.slug, req.params.id];
@@ -73,6 +76,44 @@ app.get("/blog/related", async (req, res) => {
       res.json(resu);
     }
   });
+});
+// Route For Workshop Page
+app.get("/workshop", (req, res) => {
+  res.render("workshop");
+});
+
+app.get("/class/detail/:id/list", async (req, res) => {
+  await db.query(
+    `SELECT * FROM lesson WHERE classId = ${req.params.id}`,
+    (err, resu, field) => {
+      res.json(resu);
+    }
+  );
+});
+app.get("/class/detail/:id", async (req, res) => {
+  await db.query(
+    `SELECT * FROM class WHERE classId = ${req.params.id}`,
+    async (err, resu, field) => {
+      if (err || resu.length == 0) {
+        res.redirect("/");
+      } else {
+        const responsetxt = await fetch(
+          "http://localhost:3025" + resu[0].syllabus
+        );
+        const bodytxt = await responsetxt.text();
+        const responselist = await fetch(
+          `http://localhost:3025/class/detail/${req.params.id}/list`
+        );
+        const bodylist = await responselist.json();
+
+        res.render("class-detail.ejs", {
+          data: resu[0],
+          body: bodytxt,
+          list: bodylist,
+        });
+      }
+    }
+  );
 });
 
 // Content Route from S3 Bucket

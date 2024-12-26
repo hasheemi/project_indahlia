@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Sans:ital@0;1&family=Sansita:ital,wght@0,400;0,700;0,800;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="/cdn/" />
+    <link rel="preconnect" href="/cdn/" crossorigin />
+    <link rel="prefetch" href="/cdn/" />
+    <link rel="stylesheet" href="/css/lesson.css" />
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+  </head>
+  <body>
+    <%- include('components/navbar') %>
+    <div
+      class="header"
+      style="
+        background-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.763),
+            rgba(0, 0, 0, 0.359) 30%,
+            rgba(0, 0, 0, 0.719)
+          ),
+          url('<%= data.thumbnail%>');
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      "
+    >
+      >
+      <div class="thumbnail">
+        <!-- <img src="/img/danau.jpeg" alt="Thumbnail Kelas" /> -->
+
+        <img src="<%= data.thumbnail %>" alt="Thumbnail Kelas" />
+      </div>
+    </div>
+    <div class="content">
+      <div class="silabus">
+        <!-- <input type="hidden" name="url" id="url" value="<%= data.syllabus %>" /> -->
+        <h2>Silabus Kelas</h2>
+        <p>Isi silabus kelas akan ditampilkan di sini.</p>
+        <%- body %>
+        <!-- Tambahkan isi detail silabus -->
+      </div>
+      <div class="info">
+        <h3>Step-step/Materi</h3>
+        <ul>
+          <% list.forEach(function(item) { %>
+          <ol>
+            <%= item.title %>
+          </ol>
+          <% }); %>
+          <!-- Tambahkan list materi -->
+        </ul>
+        <p><strong>Jumlah Peserta:</strong> 123 orang</p>
+        <a href="/class/join/<%= data.classId %>">
+          <button>Join Kelas</button>
+        </a>
+      </div>
+    </div>
+    <%- include('components/footer') %>
+
+    <script src="/js/navbar.js"></script>
+    <script>
+      window.onload = async () => {
+        let url = document.querySelector("input#url").value;
+        let main = document.querySelector(".silabus");
+        let req = await fetch(url);
+        let res = await req.text();
+        main.innerHTML = res;
+        // let full = res.split("\n");
+        // full.forEach((e) => {
+        //   main.innerHTML += e;
+        // });
+      };
+    </script>
+  </body>
+</html>

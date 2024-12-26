@@ -76,14 +76,73 @@
 .main .right .post {
   margin: 20px 0;
 }
-@media screen and (max-width: 1024px) {
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
   .hero {
-    min-height: 50vh;
+    min-height: 30vh;
+  }
+
+  .main .left {
+    width: 65%;
+  }
+  .main .right {
+    width: 35%;
+  }
+  .main .right h4 {
+    width: 80%;
+    font-size: 17px;
+  }
+  .share-buttons {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .share-buttons a {
+    display: block;
+  }
+}
+@media screen and (max-width: 600px) {
+  .hero {
+    min-height: 30vh;
   }
 
   .hero .content {
     width: 90%;
     padding: 20px;
+  }
+  .main {
+    flex-direction: column;
+  }
+  .main .left,
+  .main .right {
+    width: 100%;
+  }
+  .main .left h1 {
+    font-size: 30px;
+    width: 90%;
+    margin: 10px 0 10px;
+  }
+  .main .left .meta {
+    font-size: 13px;
+    margin: 5px 0 20px;
+  }
+  .main .right img {
+    /* width: 80%; */
+    /* aspect-ratio: 16/9; */
+    height: 200px;
+  }
+  .main .right .post {
+    margin: 30px 0;
+  }
+  .share-buttons {
+    width: 90%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .share-buttons a {
+    padding: 10px 40px !important;
+    display: block;
   }
 }
 
