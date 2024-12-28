@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= data.title %></title>
+    <%- include('components/exstyles') %>
+    <link rel="preconnect" href="/cdn/" />
+    <link rel="preconnect" href="https://www.youtube.com/embed/" crossorigin />
+    <link rel="preconnect" href="/cdn/" crossorigin />
+    <link rel="prefetch" href="/cdn/" />
+    <link rel="stylesheet" href="/css/detail.css" />
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+  </head>
+  <body>
+    <%- include('components/navbar') %>
+    <div class="hero">
+      <div class="content"></div>
+      <div class="thumbnail">
+        <img src="/img/leaf.jpg" alt="Thumbnail Kelas" />
+      </div>
+    </div>
+
+    <section class="layout detail">
+      <div class="silabus">
+        <h2><%= data.title %></h2>
+        <h3>Detail Kelas</h3>
+        <div class="about">
+          <div class="box">
+            <span class="what">Materi </span>
+            <span class="ans"><i class="bi bi-layout-text-sidebar"></i> 4</span>
+          </div>
+          <div class="box">
+            <span class="what">Tema </span>
+            <span class="ans"><i class="bi bi-lightbulb"></i> Daur Ulang</span>
+          </div>
+          <div class="box">
+            <span class="what">Kesulitan </span>
+            <span class="ans"> <i class="bi bi-graph-up"></i> Mudah</span>
+          </div>
+          <div class="box">
+            <span class="what">Peserta </span>
+            <span class="ans"> <i class="bi bi-person"></i>123 Orang</span>
+          </div>
+        </div>
+        <h3>Silabus Kelas</h3>
+        <%- body %>
+        <h3>Mentor</h3>
+        <div class="mentor">
+          <div class="header">
+            <img src="/img/leaf.jpg" alt="Mentor Photo" class="profile-photo" />
+            <div class="info">
+              <h6>Goat Yafi Santos</h6>
+              <p>Penghuni Puncak EPL</p>
+            </div>
+          </div>
+          <div class="desc">
+            <p>
+              Saya setiap hari selalu rajin membuka jibas sebagai sarapan Lorem
+              ipsum dolor sit amet, consectetur adipisicing.
+            </p>
+            <a
+              href="https://www.linkedin.com/in/ryancurtis"
+              class="mentor-contact"
+            >
+              <button class="small">Kontak</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <h3>Video Pembuka</h3>
+        <iframe
+          src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+        <h3>Daftar Materi</h3>
+        <ul class="step">
+          <% list.forEach(function(item) { %>
+          <li><%= item.title %></li>
+          <% }); %>
+        </ul>
+        <a href="/class/join/">
+          <button>Join Kelas</button>
+        </a>
+      </div>
+    </section>
+    <%- include('components/footer') %>
+
+    <script src="/js/navbar.js"></script>
+    <script></script>
+  </body>
+</html>

@@ -106,7 +106,7 @@ app.get("/class/detail/:id", async (req, res) => {
         );
         const bodylist = await responselist.json();
 
-        res.render("class-detail.ejs", {
+        res.render("detail.ejs", {
           data: resu[0],
           body: bodytxt,
           list: bodylist,
