@@ -116,6 +116,32 @@ app.get("/class/detail/:id", async (req, res) => {
   );
 });
 
+// Only For Development
+app.get("/class/lesson/:id", async (req, res) => {
+  await db.query(
+    `SELECT * FROM class WHERE classId = ${req.params.id}`,
+    async (err, resu, field) => {
+      if (err || resu.length == 0) {
+        res.redirect("/");
+      } else {
+        const responsetxt = await fetch(
+          "http://localhost:3025" + resu[0].syllabus
+        );
+        const bodytxt = await responsetxt.text();
+        const responselist = await fetch(
+          `http://localhost:3025/class/detail/${req.params.id}/list`
+        );
+        const bodylist = await responselist.json();
+
+        res.render("lesson.ejs", {
+          data: resu[0],
+          body: bodytxt,
+          list: bodylist,
+        });
+      }
+    }
+  );
+});
 // Content Route from S3 Bucket
 app.get("/cdn/:file", (req, res) => {
   bucket.readObject(req.params.file, async (err, data) => {

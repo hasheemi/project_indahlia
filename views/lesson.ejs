@@ -27,27 +27,34 @@
     <section class="layout detail">
       <div class="silabus">
         <h2><%= data.title %></h2>
-        <h3>Detail Kelas</h3>
-        <div class="about">
-          <div class="box">
-            <span class="what">Materi </span>
-            <span class="ans"><i class="bi bi-layout-text-sidebar"></i> 4</span>
+        <div class="switch">
+          <div class="box" target="materi">
+            <span class="ans"
+              ><i class="bi bi-journal-bookmark-fill"></i>Materi</span
+            >
           </div>
-          <div class="box">
-            <span class="what">Tema </span>
-            <span class="ans"><i class="bi bi-lightbulb"></i> Daur Ulang</span>
+          <div class="box" target="quiz">
+            <span class="ans"><i class="bi bi-calculator"></i>Quiz</span>
           </div>
-          <div class="box">
-            <span class="what">Kesulitan </span>
-            <span class="ans"> <i class="bi bi-graph-up"></i> Mudah</span>
-          </div>
-          <div class="box">
-            <span class="what">Peserta </span>
-            <span class="ans"> <i class="bi bi-person"></i>123 Orang</span>
+          <div class="box" target="diskusi">
+            <span class="ans"
+              ><i class="bi bi-chat-left-text"></i> Diskusi</span
+            >
           </div>
         </div>
-        <h3>Silabus Kelas</h3>
-        <%- body %>
+        <div class="tray materi">
+          <iframe
+            src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+          <%- body %>
+        </div>
+        <div class="tray quiz hidden"></div>
+        <div class="tray diskusi hidden"></div>
         <h3>Mentor</h3>
         <div class="mentor">
           <div class="header">
@@ -72,35 +79,18 @@
         </div>
       </div>
       <div class="info">
-        <h3>Video Pembuka</h3>
-        <iframe
-          src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
         <h3>Daftar Materi</h3>
         <ul class="step">
           <% list.forEach(function(item) { %>
           <li><%= item.title %></li>
           <% }); %>
         </ul>
-        <h3>Gabung Kelas Ini</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-          possimus tempora sed dolorum ea assumenda rem porro accusamus sapiente
-          quo, veniam modi fugiat.
-        </p>
-        <a href="/class/join/">
-          <button>Join Kelas</button>
-        </a>
       </div>
     </section>
     <%- include('components/footer') %>
 
     <script src="/js/navbar.js"></script>
+    <script src="/js/tray.js"></script>
     <script></script>
   </body>
 </html>

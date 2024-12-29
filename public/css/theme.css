@@ -46,6 +46,9 @@ blockquote {
 img {
   object-fit: cover;
 }
+.hidden {
+  display: none !important;
+}
 button {
   padding: 20px 40px;
   background: rgb(62, 53, 190);

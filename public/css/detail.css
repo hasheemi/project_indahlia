@@ -44,7 +44,13 @@
   width: 65%;
 }
 .detail h2 {
-  font-size: 30px;
+  font-size: 40px !important;
+  width: 70%;
+}
+.detail iframe {
+  width: 80%;
+  aspect-ratio: 16/9;
+  margin: 20px 0;
 }
 .detail h3 {
   font-size: 20px;
@@ -73,6 +79,27 @@
 .about .box .ans {
   font-weight: 700;
 }
+.switch {
+  display: flex;
+  gap: 5%;
+  margin: 20px auto;
+  flex-direction: row;
+}
+.switch .box {
+  width: 15%;
+  /* padding:; */
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: white;
+}
+.switch .box span {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px;
+  font-size: 15px;
+}
+
 .detail .info {
   width: 35%;
 }
@@ -173,4 +200,8 @@
 }
 .mentor button {
   margin: 10px;
+}
+.info p {
+  font-size: 13px;
+  margin: -10px 0 20px;
 }
