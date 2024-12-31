@@ -8,7 +8,7 @@
       rgba(0, 0, 0, 0.342) 55%,
       rgb(0, 0, 0)
     ),
-    url("/img/background/blog_hero.jpg");
+    url("/img/background/workshop_hero.jpg");
   background-size: cover;
   background-position: center;
   display: flex;

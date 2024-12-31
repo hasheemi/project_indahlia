@@ -25,6 +25,12 @@
     </div>
 
     <section class="layout detail">
+      <input
+        type="hidden"
+        name="quiz-url"
+        id="quiz-url"
+        value="/cdn/mengenal-jenis-jenis-toga-quiz-lsn-1734241752608.json"
+      />
       <div class="silabus">
         <h2><%= data.title %></h2>
         <div class="switch">
@@ -42,7 +48,7 @@
             >
           </div>
         </div>
-        <div class="tray materi">
+        <div class="tray materi hidden">
           <iframe
             src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
             title="YouTube video player"
@@ -53,8 +59,38 @@
           ></iframe>
           <%- body %>
         </div>
-        <div class="tray quiz hidden"></div>
-        <div class="tray diskusi hidden"></div>
+        <div class="tray quiz hidden">
+          <div id="quiz-container"></div>
+          <button id="submit-btn">Finish Quiz</button>
+          <div id="result"></div>
+        </div>
+        <div class="tray diskusi">
+          <div class="comment-container">
+            <!-- Comment Form -->
+            <div class="comment-form">
+              <h4>Leave a Comment</h4>
+              <input type="text" placeholder="Your Name" required />
+              <textarea rows="4" placeholder="Your Comment" required></textarea>
+              <button type="submit">Post Comment</button>
+            </div>
+
+            <!-- Comment List -->
+            <ul class="comment-list">
+              <li class="comment-item">
+                <div class="comment-name">John Doe</div>
+                <p class="comment-text">
+                  This is a great post! Thanks for sharing.
+                </p>
+              </li>
+              <li class="comment-item">
+                <div class="comment-name">Jane Smith</div>
+                <p class="comment-text">
+                  I really enjoyed reading this. Keep up the good work!
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
         <h3>Mentor</h3>
         <div class="mentor">
           <div class="header">
@@ -91,6 +127,7 @@
 
     <script src="/js/navbar.js"></script>
     <script src="/js/tray.js"></script>
+    <script src="/js/quiz.js"></script>
     <script></script>
   </body>
 </html>

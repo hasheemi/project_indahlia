@@ -1,0 +1,171 @@
+html {
+  overflow: hidden !important;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+/* .open .maps {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+} */
+.maps {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+}
+.open .panel {
+  width: 30%;
+  opacity: 1;
+  padding: 10px;
+  transition: ease 0.5s;
+  transform: scale(1);
+  /* display: block; */
+}
+.panel {
+  width: 0;
+  height: 100%;
+  /* display: none; */
+  opacity: 0;
+  transform: scale(0);
+  background: white;
+  transition: ease 0.5s;
+  position: absolute;
+  z-index: 11;
+  overflow-y: scroll;
+}
+.panel img {
+  width: 100%;
+  object-fit: cover;
+  height: 40%;
+  /* he; */
+}
+.panel h3 {
+  font-family: var(--heading-font);
+  font-size: 30px;
+  margin: 10px 0;
+}
+.panel p {
+  font-family: var(--body-font);
+  font-size: 13px;
+  width: 80%;
+  display: none;
+}
+.open .panel p {
+  display: block;
+}
+.panel .close {
+  position: absolute;
+  display: flex;
+  right: 10px;
+  top: 10px;
+  border-radius: 50%;
+  font-size: 30px;
+  width: 35px;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  padding: 3px;
+}
+.panel .desc {
+  font-family: var(--body-font);
+}
+.panel p {
+  margin: 20px 0;
+}
+.panel .list div {
+  margin: 10px 0;
+}
+.panel .list i {
+  margin-right: 5px;
+}
+button {
+  margin-top: 30px;
+  padding: 20px 40px;
+  background: rgb(62, 53, 190);
+  color: aliceblue;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+  .open .maps,
+  .open .panel {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 600px) {
+  html {
+    overflow-y: hidden;
+  }
+  .container {
+    height: 100vh;
+    flex-direction: column-reverse;
+  }
+  .maps {
+    width: 100vw;
+    height: 100vh;
+  }
+  .open .maps {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  .panel {
+    width: 100vw;
+    height: 0;
+    position: relative;
+  }
+  .open .panel {
+    width: 100vw;
+    height: 90vh !important;
+    bottom: 0;
+    left: 0;
+    display: block;
+    padding: 0;
+  }
+  .panel img {
+    width: 100%;
+    height: 60%;
+  }
+  .panel .desc {
+    width: calc(100vw - 20px);
+    padding: 10px;
+  }
+  .panel .close {
+    position: fixed;
+  }
+}
+.hidden {
+  display: none !important;
+}
+
+.floating {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  right: 20px; /* Adjust to your preference */
+  top: 20px; /* Adjust to your preference */
+  z-index: 20;
+}
+
+.floating .button {
+  display: inline-block;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px 15px;
+  width: 150px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: var(--body-font);
+  transition: transform 0.2s;
+}
+
+.floating .button i {
+  margin-right: 8px;
+}

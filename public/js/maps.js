@@ -15,7 +15,9 @@ let holder = document.querySelectorAll("p.hidden");
 const co = [-7.8478713, 113.0161214];
 
 // calling map
-const map = L.map("maps").setView(co, zoom);
+const map = L.map("maps", {
+  zoomControl: false,
+}).setView(co, zoom);
 holder.forEach((e) => {
   let koor = e.innerHTML.split(",");
   var marker = L.marker([koor[0], koor[1]], {
@@ -35,11 +37,59 @@ holder.forEach((e) => {
 closer.onclick = () => {
   container.classList.remove("open");
 };
+L.control
+  .zoom({
+    position: "bottomright",
+  })
+  .addTo(map);
 // Used to load and display tile layers on the map
 // Most tile servers require attribution, which you can set under `Layer`
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
+// L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//   attribution:
+//     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+// }).addTo(map);
 
 //<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15815.49726957993!2d111.42044057562478!3d-7.696634705304974!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e799700726faf01%3A0x47b4a99c8f6b6230!2sPusat%20Perserikatan%20Jomok%20Jomok%20(PJJ)%20Cabang%20Magetan!5e0!3m2!1sen!2sid!4v1714698869013!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+// var Stadia_AlidadeSatellite = L.tileLayer(
+//   "https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.{ext}",
+//   {
+//     minZoom: 0,
+//     maxZoom: 20,
+//     attribution:
+//       '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver  &copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> contributors',
+//     ext: "jpg",
+//   }
+// ).addTo(map);
+
+// Define layers
+const layerPeta = L.tileLayer(
+  "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    attribution: "&copy; OpenStreetMap contributors",
+  }
+);
+const layerSatelit = L.tileLayer(
+  "https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.jpg",
+  {
+    attribution: "&copy; Stadia Maps contributors",
+  }
+);
+
+// Add the initial layer (Layer Peta) to the map
+layerPeta.addTo(map);
+
+// Handle layer toggle
+let isPetaLayer = true;
+document.getElementById("layer-toggle").addEventListener("click", function () {
+  if (isPetaLayer) {
+    map.removeLayer(layerPeta);
+    map.addLayer(layerSatelit);
+    this.innerHTML = '<i class="bi bi-layers"></i> Layer Satelit';
+  } else {
+    map.removeLayer(layerSatelit);
+    map.addLayer(layerPeta);
+    this.innerHTML = '<i class="bi bi-layers"></i> Layer Peta';
+  }
+  isPetaLayer = !isPetaLayer;
+});

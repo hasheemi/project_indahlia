@@ -142,6 +142,35 @@ app.get("/class/lesson/:id", async (req, res) => {
     }
   );
 });
+
+// Login Page
+app.get("/login", (req, res) => {
+  res.render("login", { isLogin: req.session.isLogin });
+});
+
+// Maps Page
+app.get("/maps", async (req, res) => {
+  await db.query(`SELECT * FROM place`, (err, resu, field) => {
+    if (err) {
+      res.redirect("/");
+    } else {
+      res.render("maps", { place: resu });
+    }
+  });
+});
+app.get("/maps/place/:id", async (req, res) => {
+  await db.query(
+    `SELECT * FROM place WHERE id = ${req.params.id}`,
+    (err, resu, field) => {
+      if (err || resu.length == 0) {
+        res.redirect("/");
+      } else {
+        res.json(resu);
+      }
+    }
+  );
+});
+
 // Content Route from S3 Bucket
 app.get("/cdn/:file", (req, res) => {
   bucket.readObject(req.params.file, async (err, data) => {

@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const url = document.getElementById("quiz-url");
   const resultDiv = document.getElementById("result");
 
-  // Load quiz questions from JSON file
   fetch(url.value)
     .then((response) => response.json())
     .then((quizData) => {
@@ -18,44 +17,40 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => console.error("Error loading quiz:", error));
 
   function displayQuiz(quizData) {
-    quizData.forEach((item, index) => {
-      const questionDiv = document.createElement("div");
-      questionDiv.classList.add("question");
+    const quizHTML = quizData
+      .map((item, index) => {
+        const optionsHTML = item.options
+          .map(
+            (option, i) => `
+            <input type="radio" name="question-${index}" id="question-${index}-${i}" value="${option}">
+              <label class="option" for="question-${index}-${i}">
+                ${option}
+              </label><br>
+            `
+          )
+          .join("");
 
-      const questionTitle = document.createElement("h3");
-      questionTitle.textContent = `Q${index + 1}: ${item.question}`;
-      questionDiv.appendChild(questionTitle);
+        return `
+          <div class="question">
+            <span>Pertanyaan ${index + 1}</span>
+            <h4>${item.question}</h4>
+            <div class="options">${optionsHTML}</div>
+          </div>
+        `;
+      })
+      .join("");
 
-      const optionsDiv = document.createElement("div");
-      optionsDiv.classList.add("options");
-
-      item.options.forEach((option) => {
-        const label = document.createElement("label");
-        const radio = document.createElement("input");
-        radio.type = "radio";
-        radio.name = `question-${index}`;
-        radio.value = option;
-        label.appendChild(radio);
-        label.appendChild(document.createTextNode(option));
-        optionsDiv.appendChild(label);
-        optionsDiv.appendChild(document.createElement("br"));
-      });
-
-      questionDiv.appendChild(optionsDiv);
-      quizContainer.appendChild(questionDiv);
-    });
+    quizContainer.innerHTML = quizHTML;
   }
 
   function calculateScore(quizData) {
-    let score = 0;
-    quizData.forEach((item, index) => {
+    return quizData.reduce((score, item, index) => {
       const selectedOption = document.querySelector(
         `input[name="question-${index}"]:checked`
       );
-      if (selectedOption && selectedOption.value === item.answer) {
-        score++;
-      }
-    });
-    return score;
+      return (
+        score + (selectedOption && selectedOption.value === item.answer ? 1 : 0)
+      );
+    }, 0);
   }
 });

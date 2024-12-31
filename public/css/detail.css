@@ -84,6 +84,7 @@
   gap: 5%;
   margin: 20px auto;
   flex-direction: row;
+  cursor: pointer;
 }
 .switch .box {
   width: 15%;
@@ -98,6 +99,41 @@
   justify-content: center;
   margin: 10px;
   font-size: 15px;
+}
+.quiz .question span {
+  color: gray;
+  display: block;
+  margin: 20px 0 2px;
+}
+.quiz .question h4 {
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.quiz .question .options {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.quiz .question .option {
+  margin: 10px 0;
+  padding: 20px;
+  font-family: var(--body-font);
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-size: 17px;
+  transition: all 150ms ease;
+}
+.quiz .question input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"]:checked + label {
+  transition: all 150ms ease;
+  border-left: 10px solid var(--blue);
+}
+.quiz button {
+  margin: 20px 0;
 }
 
 .detail .info {
@@ -204,4 +240,68 @@
 .info p {
   font-size: 13px;
   margin: -10px 0 20px;
+}
+
+.diskusi {
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment-container {
+  width: 100%;
+}
+
+.comment-form {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.comment-form input[type="text"],
+.comment-form textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.comment-form button {
+  background-color: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.comment-item {
+  padding: 10px 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.comment-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-text {
+  margin: 0;
+  color: #555;
 }

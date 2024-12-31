@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <%- include('components/exstyles') %>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/maps.css" />
+    <title>Maps</title>
+  </head>
+  <body>
+    <% place.forEach(e => { %>
+    <p class="hidden"><%= e.koordinat %>,<%= e.id %></p>
+    <% }) %>
+    <div class="container">
+      <div class="panel">
+        <div class="close"><i class="bi bi-x-lg"></i></div>
+        <img src="" alt="" />
+
+        <div class="desc">
+          <h3></h3>
+          <div>
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
+            ><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i
+            ><i class="bi bi-star-fill"></i>
+          </div>
+          <div>
+            <p>
+              Sebuah air terjun dengan pesona alam yang memukau. Rindangnya
+              pepohonan serta gemericik air serta unsur mistiknya semakin
+              membuat suasana nyaman
+            </p>
+          </div>
+          <div class="list">
+            <div><i class="bi bi-geo-alt"></i> Probolinggo, Jawa Timur</div>
+            <div><i class="bi bi-flag"></i> Air terjun</div>
+            <div><i class="bi bi-map"></i> Pegunungan</div>
+            <div><i class="bi bi-telephone"></i> 0827282829</div>
+          </div>
+          <a href=""><button>lihat google maps</button></a>
+          <button><i class="bi bi-share-fill"></i></button>
+        </div>
+      </div>
+      <div id="maps" class="maps"></div>
+      <div class="floating">
+        <a href="index.html" class="button">
+          <i class="bi bi-house-door"></i> Ke Beranda
+        </a>
+        <a class="button" id="layer-toggle">
+          <i class="bi bi-layers"></i> Layer Peta
+        </a>
+      </div>
+    </div>
+
+    <script src="/js/maps.js"></script>
+  </body>
+</html>
