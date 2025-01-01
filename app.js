@@ -171,6 +171,11 @@ app.get("/maps/place/:id", async (req, res) => {
   );
 });
 
+// AI ChatBot Route
+app.get("/assistant", (req, res) => {
+  res.render("chat");
+});
+
 // Content Route from S3 Bucket
 app.get("/cdn/:file", (req, res) => {
   bucket.readObject(req.params.file, async (err, data) => {

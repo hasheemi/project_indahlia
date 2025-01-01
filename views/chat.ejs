@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat: DahliAI Pakar Lingkungan Siap Membantu</title>
+    <%- include('components/exstyles') %>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/chat.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+  </head>
+  <body>
+    <%- include('components/navbar') %>
+    <div class="hero">
+      <div class="content">
+        <h1>Artikel lingkungan</h1>
+        <p>
+          Temukan berita terupdate apa saja yang terjadi di Indonesia terkait
+          lingkungan hidup dan tambah wawasan anda mengenai inovasi di bidang
+          teknologi bagi lingkungan
+        </p>
+      </div>
+    </div>
+    <section class="layout chat-container">
+      <div class="chat-box" id="chatBox">
+        <!-- Chat messages -->
+        <div class="chat-message ai-message">
+          <p>Hello! How can I help you today?</p>
+        </div>
+        <div class="chat-message user-message">
+          <p>Can you explain data science?</p>
+        </div>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input
+          type="text"
+          class="chat-input"
+          id="chatInput"
+          placeholder="Type your message here..."
+        />
+        <button type="submit" class="chat-submit">Send</button>
+      </form>
+    </section>
+    <%- include('components/footer') %>
+    <script src="/js/navbar.js"></script>
+  </body>
+</html>

@@ -201,10 +201,9 @@ body {
 }
 .workshop .card {
   background: #fff;
-  border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 300px;
+  width: 27%;
 }
 
 .workshop .card-image {
@@ -298,10 +297,11 @@ body {
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   .hero {
-    min-height: 80vh;
+    min-height: 50vh;
   }
   .hero h1 {
     padding-top: 60px;
+    margin: 60px 0 0;
     font-size: min(80px, 10vw);
   }
   .hero .content {
@@ -396,7 +396,7 @@ body {
 }
 @media only screen and (max-width: 600px) {
   .hero {
-    min-height: 80vh;
+    min-height: 50vh;
   }
   .hero h1 {
     padding-top: 70px;

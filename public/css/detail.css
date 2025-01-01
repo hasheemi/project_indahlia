@@ -160,8 +160,9 @@ input[type="radio"]:checked + label {
   content: counter(step);
   /* Automatically increment the counter */
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 30px !important;
+  height: 30px !important;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   background-color: #4caf50; /* Default color, can be customized */
   color: white;
@@ -173,17 +174,80 @@ input[type="radio"]:checked + label {
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   .hero {
-    min-height: 30vh;
+    min-height: 60vh;
+  }
+  .thumbnail {
+    width: 60%;
+    bottom: -120px;
+  }
+  .detail .about {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .detail .about .box {
+    /* padding: 10px 20px; */
+    width: 35%;
+    margin: 10px 0;
+  }
+  .detail .main p {
+    font-size: 15px;
+  }
+  .switch .box {
+    width: 30%;
+  }
+  .mentor {
+    width: 80% !important;
   }
 }
 @media screen and (max-width: 600px) {
   .hero {
-    min-height: 30vh;
+    min-height: 50vh;
   }
 
   .hero .content {
     width: 90%;
     padding: 20px;
+  }
+  .thumbnail {
+    width: 70%;
+    bottom: -90px;
+  }
+  .detail {
+    flex-direction: column;
+  }
+  .detail .silabus,
+  .detail .info {
+    width: 100%;
+  }
+  .detail h2 {
+    width: 90%;
+  }
+  .detail .about {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    /* gap: 3%; */
+  }
+  .switch .box {
+    width: 30%;
+  }
+  .detail .about .box {
+    /* padding: 10px 20px; */
+    width: 37%;
+    margin: 10px 0;
+  }
+  .detail .main p {
+    font-size: 15px;
+  }
+  .detail iframe {
+    width: 100%;
+  }
+  .mentor {
+    width: 80% !important;
+  }
+  .info iframe {
+    width: 90% !important;
   }
 }
 .mentor {
