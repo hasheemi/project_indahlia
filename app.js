@@ -176,6 +176,10 @@ app.get("/assistant", (req, res) => {
   res.render("chat");
 });
 
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard/index");
+});
+
 // Content Route from S3 Bucket
 app.get("/cdn/:file", (req, res) => {
   bucket.readObject(req.params.file, async (err, data) => {

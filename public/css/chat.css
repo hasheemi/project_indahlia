@@ -59,28 +59,25 @@
 .chat-message {
   margin-bottom: 15px;
   width: 40%;
+  border-radius: 30px;
+  font-family: var(--body-font);
 }
-
+.chat-message div {
+  background: white;
+  box-shadow: 0 3px 10px rgba(36, 36, 36, 0.2);
+  color: #333;
+  padding: 16px;
+  border-radius: 10px;
+}
+.chat-message h4 {
+  margin: 10px 0;
+}
 .ai-message {
   margin-right: auto;
 }
 
-.ai-message p {
-  background: #e1f5fe;
-  color: #333;
-  padding: 10px;
-  border-radius: 10px;
-}
-
 .user-message {
   margin-left: auto;
-}
-
-.user-message p {
-  background: #d1c4e9;
-  color: #333;
-  padding: 10px;
-  border-radius: 10px;
 }
 
 .chat-form {
@@ -101,7 +98,7 @@
 .chat-submit {
   padding: 10px 20px;
   margin-left: 10px;
-  background-color: #4a90e2;
+  background-color: var(--blue);
   color: white;
   border: none;
   border-radius: 4px;
@@ -109,5 +106,39 @@
 }
 
 .chat-submit:hover {
-  background-color: #357ab7;
+  background-color: #354db7;
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .hero {
+    min-height: 50vh;
+  }
+  .hero h1 {
+    padding-top: 60px;
+    font-size: min(80px, 10vw);
+  }
+  .hero .content {
+    width: 80%;
+    padding: 20px;
+  }
+  .chat-message {
+    margin-bottom: 15px;
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero {
+    min-height: 50vh;
+  }
+  .hero h1 {
+    padding-top: 70px;
+    font-size: 10vw;
+  }
+  .hero .content {
+    width: 90%;
+    padding: 20px;
+  }
+  .chat-message {
+    margin-bottom: 15px;
+    width: 70%;
+  }
 }
