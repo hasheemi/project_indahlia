@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../components/exstyles') %>
+    <title>Posting Artikel LIngkungan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/form.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../components/sidebar') %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Posting Artikel Anda</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
+          tempora dolores pariatur dignissimos reprehenderit quibusdam quod?
+          Labore, aliquid illo.
+        </p>
+      </div>
+      <div class="main">
+        <form action="">
+          <div class="input-group">
+            <label for="title" class="title">judul</label>
+            <input type="text" id="title" name="title" required />
+            <span class="note">Lorem ipsum dolor sit amet.</span>
+          </div>
+          <div class="input-group">
+            <label for="title" class="title">judul</label>
+            <div class="file-zone">
+              <p class="uplace">Drop file here or click to upload</p>
+              <input type="file" name="photo" id="photo" required />
+            </div>
+            <span class="note">Lorem ipsum dolor sit amet.</span>
+          </div>
+          <div class="input-group">
+            <label for="category" class="title">kategori</label>
+            <select id="category" name="category" required>
+              <option value="1">bencana</option>
+              <option value="2">tokoh</option>
+              <option value="3">inovasi</option>
+              <option value="4">edukasi</option>
+              <option value="5">wisata</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="title">Isi Artikel</label>
+            <input type="hidden" name="myquil" id="myquil" />
+            <div id="editor">
+              <p>Halo! Dunia</p>
+              <p>Saya Peduli <strong>Lingkungan</strong></p>
+              <p><br /></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script src="/js/drag.js"></script>
+    <script>
+      var toolbarOptions = [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6
+        ["bold", "italic", "underline"], // Basic text formatting
+        ["blockquote", { script: "super" }, { script: "sub" }], // Blockquote, superscript, subscript
+        [{ list: "ordered" }, { list: "bullet" }], // Lists
+        [{ align: [] }], // Alignment
+        ["image"], // Image upload
+        ["clean"], // Clear formatting
+      ];
+
+      // Initialize Quill editor
+      var quill = new Quill("#editor", {
+        theme: "snow",
+        modules: {
+          toolbar: toolbarOptions,
+        },
+      });
+      const toolbar = quill.getModule("toolbar");
+      toolbar.addHandler("image", function () {
+        const url = prompt("Enter the image URL:");
+        if (url) {
+          const range = quill.getSelection(); // Get current cursor position
+          quill.insertEmbed(range.index, "image", url); // Insert image
+        }
+      });
+
+      quill.on("text-change", function () {
+        var htmlContent = quill.root.innerHTML;
+        document.querySelector("#myquil").value = htmlContent;
+      });
+
+      // document.getElementById("submit").onclick = () => {
+      //   document.getElementById("res").value = `${quill.root.innerHTML}`;
+      // };
+    </script>
+  </body>
+</html>

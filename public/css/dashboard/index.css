@@ -23,16 +23,46 @@
   width: 100%;
   display: flex;
   /* gap: 2%; */
-
+  font-family: var(--body-font);
   justify-content: space-between;
 }
 .count .box {
   width: 22%;
-  height: 100px;
+  min-height: 100px;
   background: white;
   box-shadow: 0 4px 15px rgba(32, 32, 32, 0.135);
+  padding: 10px 20px;
+  position: relative;
+  border-radius: 16px;
 }
-
+.count .box .head {
+  font-size: 15px;
+  /* font-weight: 700; */
+}
+.count .box .num {
+  font-weight: 700;
+  font-size: 40px;
+}
+.count .box .add {
+  display: flex;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  /* aspect-ratio: 1/1; */
+  background: var(--blue);
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  color: white;
+}
+.count .box .add i {
+  display: block;
+  font-size: 15px;
+  margin: auto;
+}
 .activity {
   display: flex;
   gap: 5%;
@@ -48,9 +78,31 @@
   background-color: white;
   width: 60%;
   padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(32, 32, 32, 0.135);
 }
 .activity .record {
   background-color: white;
   width: 40%;
   height: 100%;
+  padding: 10px;
+  border-radius: 16px;
+  font-family: var(--body-font);
+  box-shadow: 0 4px 15px rgba(32, 32, 32, 0.135);
+}
+.activity .record .list {
+  width: 80%;
+  border: 0.3px solid rgba(36, 35, 35, 0.609);
+  border-radius: 12px;
+  padding: 5px 10px;
+  margin: 15px;
+}
+.activity .record .table {
+  font-size: 16px;
+  font-weight: 700;
+}
+.activity .record span {
+  display: block;
+  font-size: 12px;
+  width: 60%;
 }

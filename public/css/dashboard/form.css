@@ -1,0 +1,76 @@
+.head h2 {
+  font-size: 40px;
+}
+.head p {
+  font-size: 12px;
+  width: 40%;
+  margin: 10px 0;
+}
+.main form {
+  width: 80%;
+  padding-bottom: 80px;
+}
+.input-group {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.input-group .title {
+  margin: 10px 0;
+  font-size: 23px;
+  text-transform: capitalize;
+}
+.input-group input,
+.input-group select {
+  height: 35px;
+  font-size: 15px;
+  border: 1px solid var(--blue);
+  background: white;
+  padding: 10px;
+}
+.input-group .note {
+  display: block;
+  margin: 5px 0;
+  font-size: 11px;
+}
+.input-group .ql-snow {
+  background-color: white;
+  border: 1px solid var(--blue);
+  /* min-height: 100px; */
+}
+.input-group #editor {
+  min-height: 200px;
+}
+/* .input-group; */
+.main .file-zone {
+  width: 100%;
+  height: 300px;
+  border: 1px solid var(--blue);
+  background-color: white;
+  display: flex;
+  position: relative;
+}
+.main .file-zone input[type="file"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+}
+.main .file-zone p {
+  display: block;
+  text-align: center;
+  margin: auto;
+}
+.main .file-zone .preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gray {
+  background: rgb(179, 178, 178);
+}
+.hidden {
+  display: none !important;
+}

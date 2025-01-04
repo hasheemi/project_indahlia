@@ -179,6 +179,12 @@ app.get("/assistant", (req, res) => {
 app.get("/dashboard", (req, res) => {
   res.render("dashboard/index");
 });
+app.get("/dashboard/blog", (req, res) => {
+  res.render("dashboard/blog");
+});
+app.get("/dashboard/blog/add", (req, res) => {
+  res.render("dashboard/post_article");
+});
 
 // Content Route from S3 Bucket
 app.get("/cdn/:file", (req, res) => {
