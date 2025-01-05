@@ -21,7 +21,7 @@
     <%- include('../components/sidebar') %>
     <section class="home-section">
       <div class="head">
-        <h2>Posting Artikel Anda</h2>
+        <h2>Kirim Laporan Kepada Admin</h2>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
           tempora dolores pariatur dignissimos reprehenderit quibusdam quod?
@@ -29,27 +29,14 @@
         </p>
       </div>
       <div class="main">
-        <form action="/dashboard/blog/add" method="post">
+        <form action="">
           <div class="input-group">
-            <div class="alpha">
-              <input type="hidden" name="slug" id="slug" />
-              <input
-                type="hidden"
-                name="date"
-                value="<%= new Date().getTime(); %>"
-              />
-              <input type="hidden" name="email" value="<%= email %>" />
-              <input type="hidden" name="name" value="<%= name %>" />
-              <input type="hidden" name="userId" value="<%= userId %>" />
-            </div>
-          </div>
-          <div class="input-group">
-            <label for="title" class="title">judul</label>
+            <label for="title" class="title">judul laporan</label>
             <input type="text" id="title" name="title" required />
             <span class="note">Lorem ipsum dolor sit amet.</span>
           </div>
           <div class="input-group">
-            <label for="photo" class="title">Foto Cover</label>
+            <label for="photo" class="title">Foto Bukti</label>
             <div class="file-zone">
               <p class="uplace">Drop file here or click to upload</p>
               <input type="file" name="photo" id="photo" required />
@@ -58,31 +45,41 @@
           </div>
           <div class="input-group input-row">
             <div class="input-col">
-              <label for="category" class="title">kategori</label>
+              <label for="category" class="title">Jenis Laporan</label>
               <select id="category" name="category" required>
-                <option value="bencana">Bencana</option>
-                <option value="tokoh">Tokoh</option>
-                <option value="inovasu">Inovasi</option>
-                <option value="edukasi">Edukasi</option>
-                <option value="wisata">Wisata</option>
+                <option value="1">Bencana Alam</option>
+                <option value="2">Pencemaran</option>
+                <option value="3">Kejahatan Lingkungan</option>
+                <option value="4">Penyebaran Penyakit</option>
+                <option value="5">Darurat Lainnya</option>
               </select>
             </div>
             <div class="input-col">
-              <label for="scope" class="title">Lingkup</label>
+              <label for="scope" class="title">Urgensi</label>
               <select id="scope" name="scope" required>
-                <option value="nasional">Nasional</option>
-                <option value="internasional">Internasional</option>
+                <option value="1">Sangat Urgent</option>
+                <option value="2">Dampak Kerusakan Luas</option>
+                <option value="3">Maraknya Korban Jiwa</option>
+                <option value="4">Memerlukan Bantuan Logistik</option>
+                <option value="5">Harus Segera Diatasi</option>
               </select>
             </div>
           </div>
           <div class="input-group">
-            <label class="title">Isi Artikel</label>
+            <label class="title">Isi Laporan</label>
             <input type="hidden" name="myquil" id="myquil" />
             <div id="editor">
               <p>Halo! Dunia</p>
               <p>Saya Peduli <strong>Lingkungan</strong></p>
               <p><br /></p>
             </div>
+          </div>
+          <div class="input-group">
+            <label for="head" class="title">Tembusan</label>
+            <input type="text" id="head" name="head" />
+            <span class="note"
+              >Tulis Seseorang yang Berwenang Di Daerah Tersebut</span
+            >
           </div>
           <div class="button-group">
             <button type="reset" class="reset">

@@ -5,9 +5,16 @@ const session = require("express-session");
 const path = require("path");
 const fetch = require("node-fetch-commonjs");
 const request = require("request");
+const { google } = require("googleapis");
 const fileUpload = require("express-fileupload");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const cors = require("cors");
 require("dotenv").config();
+
+// Import Middleware
+const auth = require("./middlewares/auth");
+const uploadfile = require("./middlewares/upload_file");
+const storehtml = require("./middlewares/store_html");
 
 // Initialize Express Server
 const app = express();
@@ -18,6 +25,13 @@ const db = require("./helpers/db");
 const bucket = require("./helpers/bucket");
 
 // Import Middleware
+const proxy = createProxyMiddleware({
+  router: (req) => new URL(req.path.substring(7)),
+  pathRewrite: (path, req) => new URL(req.path.substring(7)).pathname,
+  changeOrigin: true,
+  logger: console,
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +51,20 @@ app.use(
 app.use(function (req, res, next) {
   res.locals = req.session;
   next();
+});
+const authClient = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "http://localhost:3025/auth/google/callback"
+);
+const scopes = [
+  "https://www.googleapis.com/auth/userinfo.email",
+  "https://www.googleapis.com/auth/userinfo.profile",
+];
+const authUrl = authClient.generateAuthUrl({
+  access_type: "offline",
+  scope: scopes,
+  include_granted_scopes: true,
 });
 
 // Main App Route
@@ -176,14 +204,46 @@ app.get("/assistant", (req, res) => {
   res.render("chat");
 });
 
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard/index");
+app.get("/dashboard", auth, (req, res) => {
+  const { name, email, userId } = req.session;
+  res.render("dashboard/index", { name, email, userId });
 });
-app.get("/dashboard/blog", (req, res) => {
-  res.render("dashboard/blog");
+app.get("/dashboard/blog", auth, (req, res) => {
+  const { name, email, userId } = req.session;
+  res.render("dashboard/blog", { name, email, userId });
 });
-app.get("/dashboard/blog/add", (req, res) => {
-  res.render("dashboard/post_article");
+app.get("/dashboard/blog/add", auth, (req, res) => {
+  const { name, email, userId } = req.session;
+  res.render("dashboard/post_article", { name, email, userId });
+});
+app.post(
+  "/dashboard/blog/add",
+  auth,
+  uploadfile,
+  storehtml,
+  async (req, res) => {
+    let data = req.body;
+    await db.query(
+      `INSERT INTO blog (userId,judul,slug,isi,img,timestamp,email,cuplikan) VALUES ("${data.username}","${data.title}","${data.slug}","${data.url}","${data.img}","${data.date}","${data.email}","${data.cuplikan}")`,
+      function (err, resu, field) {
+        if (err) {
+          console.log(err);
+          res.redirect("/dashboard/write");
+        } else {
+          res.redirect("/dashboard");
+        }
+      }
+    );
+  }
+);
+app.get("/dashboard/maps/add", auth, (req, res) => {
+  res.render("dashboard/post_place");
+});
+app.get("/dashboard/report", auth, (req, res) => {
+  res.render("dashboard/report");
+});
+app.get("/dashboard/volunteer", auth, (req, res) => {
+  res.render("dashboard/volunteer");
 });
 
 // Content Route from S3 Bucket
@@ -193,6 +253,70 @@ app.get("/cdn/:file", (req, res) => {
     res.type(req.params.file.split(".")[1]);
     res.send(data.buffer);
   });
+});
+
+//Proxy For Geodata
+app.get("/proxy/*", proxy, (req, res) => {
+  res.send("hello");
+});
+
+// Google Oauth Login Route
+app.get("/auth/google", (req, res) => {
+  res.redirect(authUrl);
+});
+app.get("/auth/google/callback", async (req, res) => {
+  const { code } = req.query;
+  const { tokens } = await authClient.getToken(code);
+  authClient.setCredentials(tokens);
+  const oauth2 = google.oauth2({
+    auth: authClient,
+    version: "v2",
+  });
+  const { data } = await oauth2.userinfo.get();
+  await db.query(
+    `INSERT INTO user (name, email, profile) VALUES (?, ?, ?)`,
+    [`${data.given_name} ${data.family_name}`, data.email, data.picture],
+    async function (err, resu, field) {
+      if (err) {
+        if (err.errno === 1062) {
+          try {
+            await db.query(
+              `SELECT id, name FROM user WHERE email = ?`,
+              [data.email],
+              async function (errr, resuu, fieldd) {
+                req.session.isLogin = true;
+                req.session.name = resuu[0].name;
+                req.session.email = data.email;
+                req.session.userId = resuu[0].id;
+                return res.redirect("/dashboard");
+              }
+            );
+          } catch (queryError) {
+            console.error("Error saat mencari user:", queryError.message);
+            return res
+              .status(500)
+              .send("Terjadi error saat memproses permintaan.");
+          }
+        } else {
+          console.error("Error saat insert:", err.message);
+          return res.status(500).send("Terjadi error pada server.");
+        }
+      } else {
+        req.session.isLogin = true;
+        req.session.name = data.given_name;
+        req.session.email = data.email;
+        req.session.userId = resu.insertId;
+        return res.redirect("/dashboard");
+      }
+    }
+  );
+});
+app.get("/auth/google/logout", (req, res) => {
+  if (authClient.credentials.access_token !== undefined) {
+    authClient.revokeCredentials();
+  }
+  req.session.destroy();
+  res.redirect("/");
 });
 
 // Start the Server on Port

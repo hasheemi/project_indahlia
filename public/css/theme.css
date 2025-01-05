@@ -54,7 +54,11 @@ button {
   background: rgb(62, 53, 190);
   color: aliceblue;
   font-weight: 500;
+  cursor: pointer;
   text-transform: capitalize;
+}
+button:hover {
+  box-shadow: 0 4px 15px rgba(32, 32, 32, 0.431);
 }
 button.small {
   padding: 10px 20px;

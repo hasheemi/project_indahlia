@@ -6,9 +6,13 @@
   width: 40%;
   margin: 10px 0;
 }
+.home-section {
+  margin-left: 30px;
+}
 .main form {
-  width: 80%;
+  width: 90%;
   padding-bottom: 80px;
+  /* padding-left: 50px; */
 }
 .input-group {
   display: flex;
@@ -22,12 +26,19 @@
   text-transform: capitalize;
 }
 .input-group input,
-.input-group select {
-  height: 35px;
+.input-group select,
+.input-group textarea {
+  min-height: 35px;
   font-size: 15px;
   border: 1px solid var(--blue);
   background: white;
   padding: 10px;
+}
+.input-group textarea {
+  min-height: 100px;
+}
+.input-group select option {
+  text-transform: capitalize;
 }
 .input-group .note {
   display: block;
@@ -41,6 +52,17 @@
 }
 .input-group #editor {
   min-height: 200px;
+}
+.input-group.input-row {
+  /* background-color: blueviolet; */
+  flex-direction: row;
+  gap: 20px;
+}
+.input-group .input-col {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  /* will-change: 100%; */
 }
 /* .input-group; */
 .main .file-zone {
@@ -67,6 +89,28 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.button-group {
+  display: flex;
+  width: 80%;
+  margin: 10px 0;
+  justify-content: space-between;
+  color: var(--white);
+}
+.button-group button {
+  padding: 15px 40px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-direction: ; */
+}
+.button-group i {
+  font-size: 16px;
+  margin: 0 5px;
+}
+.button-group .reset {
+  background-color: rgb(220, 45, 45);
 }
 .gray {
   background: rgb(179, 178, 178);
