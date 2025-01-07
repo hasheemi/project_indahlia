@@ -29,13 +29,36 @@
         </p>
       </div>
       <div class="main">
-        <form action="">
+        <form
+          action="/dashborad/volunteer/add"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="input-group">
-            <label for="name" class="title">Nama Lengkap</label>
-            <input type="text" id="name" name="name" required />
+            <div class="alpha">
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input
+                type="hidden"
+                name="provinsir"
+                id="provinsir"
+                value="ACEH"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="render" value="dashboard/volunteer" />
+              <input type="hidden" name="nom" value="vlt" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="fullname" class="title">Nama Lengkap</label>
+            <input type="text" id="fullname" name="fullname" required />
             <span class="note">Lorem ipsum dolor sit amet.</span>
           </div>
-
           <div class="input-group input-row">
             <div class="input-col">
               <label for="work" class="title">Pekerjaan Saat Ini</label>
@@ -70,12 +93,14 @@
             </div>
           </div>
           <div class="input-group">
-            <label class="title">Deskripsi Singkat Tentang Diri Anda</label>
+            <label for="desc" class="title"
+              >Deskripsi Singkat Tentang Diri Anda</label
+            >
             <textarea name="desc" id="desc"></textarea>
           </div>
           <div class="input-group">
-            <label for="journal" class="title">Essay Lingkungan</label>
-            <input type="file" name="journal" id="journal" required />
+            <label for="essay" class="title">Essay Lingkungan</label>
+            <input type="file" name="essay" id="essay" required />
           </div>
           <div class="button-group">
             <button type="reset" class="reset">
@@ -86,7 +111,6 @@
         </form>
       </div>
     </section>
-    <script src="/js/drag.js"></script>
     <script src="/js/select.js"></script>
     <script>
       var toolbarOptions = [

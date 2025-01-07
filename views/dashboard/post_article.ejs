@@ -29,7 +29,11 @@
         </p>
       </div>
       <div class="main">
-        <form action="/dashboard/blog/add" method="post">
+        <form
+          action="/dashboard/blog/add"
+          method="post"
+          enctype="multipart/form-data"
+        >
           <div class="input-group">
             <div class="alpha">
               <input type="hidden" name="slug" id="slug" />
@@ -41,6 +45,12 @@
               <input type="hidden" name="email" value="<%= email %>" />
               <input type="hidden" name="name" value="<%= name %>" />
               <input type="hidden" name="userId" value="<%= userId %>" />
+              <input
+                type="hidden"
+                name="render"
+                value="dashboard/post_article"
+              />
+              <input type="hidden" name="nom" value="atc" />
             </div>
           </div>
           <div class="input-group">
@@ -94,6 +104,7 @@
       </div>
     </section>
     <script src="/js/drag.js"></script>
+    <script src="/js/slug.js"></script>
     <script>
       var toolbarOptions = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6

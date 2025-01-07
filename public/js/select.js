@@ -1,4 +1,5 @@
 const selectProvinsi = document.getElementById("provinsi");
+const provinsiName = document.getElementById("provinsir");
 const selectKab = document.getElementById("kabupaten");
 
 window.onload = async function () {
@@ -17,6 +18,7 @@ window.onload = async function () {
 };
 
 selectProvinsi.onchange = async (e) => {
+  provinsiName.value = selectProvinsi.selectedOptions[0].text;
   let kabId = selectProvinsi.selectedOptions[0].value;
   const kabApi = `/proxy/https://hasheemi.github.io/api-wilayah-indonesia/api/regencies/${kabId}.json`;
   const req = await fetch(kabApi, {
@@ -26,7 +28,7 @@ selectProvinsi.onchange = async (e) => {
   selectKab.innerHTML = "";
   data.forEach((kab) => {
     var option = document.createElement("option");
-    option.value = kab.id;
+    option.value = kab.name;
     option.text = kab.name;
     selectKab.appendChild(option);
   });

@@ -29,7 +29,32 @@
         </p>
       </div>
       <div class="main">
-        <form action="">
+        <form
+          action="/dashboard/report/add"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="input-group">
+            <div class="alpha">
+              <input type="hidden" name="slug" id="slug" />
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input
+                type="hidden"
+                name="provinsir"
+                id="provinsir"
+                value="ACEH"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="render" value="dashboard/report" />
+              <input type="hidden" name="nom" value="rpt" />
+            </div>
+          </div>
           <div class="input-group">
             <label for="title" class="title">judul laporan</label>
             <input type="text" id="title" name="title" required />
@@ -42,6 +67,16 @@
               <input type="file" name="photo" id="photo" required />
             </div>
             <span class="note">Lorem ipsum dolor sit amet.</span>
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="provinsi" class="title">Provinsi</label>
+              <select id="provinsi" name="provinsi" required></select>
+            </div>
+            <div class="input-col">
+              <label for="kabupaten" class="title">kabupaten</label>
+              <select id="kabupaten" name="kabupaten" required></select>
+            </div>
           </div>
           <div class="input-group input-row">
             <div class="input-col">
@@ -91,6 +126,8 @@
       </div>
     </section>
     <script src="/js/drag.js"></script>
+    <script src="/js/select.js"></script>
+    <script src="/js/slug.js"></script>
     <script>
       var toolbarOptions = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6

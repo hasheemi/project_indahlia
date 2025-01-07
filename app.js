@@ -15,6 +15,10 @@ require("dotenv").config();
 const auth = require("./middlewares/auth");
 const uploadfile = require("./middlewares/upload_file");
 const storehtml = require("./middlewares/store_html");
+const getCoordinate = require("./middlewares/coordinat");
+const snippet = require("./middlewares/snippet");
+const summary = require("./middlewares/ai_summary");
+const masterAuth = require("./middlewares/masterAuth");
 
 // Initialize Express Server
 const app = express();
@@ -217,25 +221,157 @@ app.get("/dashboard/blog/add", auth, (req, res) => {
   res.render("dashboard/post_article", { name, email, userId });
 });
 app.post(
+  "/dashboard/maps/add",
+  auth,
+  uploadfile,
+  getCoordinate,
+  async (req, res) => {
+    console.log(req.body);
+    const data = req.body;
+
+    try {
+      // Prepare the query
+      const sql = `
+      INSERT INTO place
+      (userId, username, nama, deskripsi, img, timestamp, email, koordinat, jenis, kondisi, link, notel, provinsi, kabupaten) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+      const values = [
+        data.userId,
+        data.name,
+        data.title,
+        data.desc,
+        data.photo,
+        data.date,
+        data.email,
+        data.koordinat,
+        data.jenis,
+        data.lingkungan,
+        data.link,
+        data.contact,
+        data.provinsir,
+        data.kabupaten,
+      ];
+      await db.query(sql, values);
+      res.redirect("/dashboard/maps");
+    } catch (err) {
+      console.error("Error inserting place post:", err);
+
+      res.redirect("/dashboard/maps/add");
+    }
+  }
+);
+app.post(
   "/dashboard/blog/add",
   auth,
   uploadfile,
   storehtml,
+  snippet,
+  summary,
   async (req, res) => {
-    let data = req.body;
-    await db.query(
-      `INSERT INTO blog (userId,judul,slug,isi,img,timestamp,email,cuplikan) VALUES ("${data.username}","${data.title}","${data.slug}","${data.url}","${data.img}","${data.date}","${data.email}","${data.cuplikan}")`,
-      function (err, resu, field) {
-        if (err) {
-          console.log(err);
-          res.redirect("/dashboard/write");
-        } else {
-          res.redirect("/dashboard");
-        }
-      }
-    );
+    const data = req.body;
+
+    try {
+      // Prepare the query
+      const sql = `
+        INSERT INTO blog 
+        (userId, username, judul, slug, isi, img, timestamp, email, cuplikan, kategori, lingkup, summary) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const values = [
+        data.userId,
+        data.name,
+        data.title,
+        data.slug,
+        data.quil,
+        data.photo,
+        data.date,
+        data.email,
+        data.snippet,
+        data.category,
+        data.scope,
+        data.summary,
+      ];
+      await db.query(sql, values);
+      res.redirect("/dashboard/blog");
+    } catch (err) {
+      console.error("Error inserting blog post:", err);
+
+      res.redirect("/dashboard/blog/add");
+    }
   }
 );
+app.post(
+  "/dashboard/report/add",
+  auth,
+  uploadfile,
+  storehtml,
+  async (req, res) => {
+    const data = req.body;
+
+    try {
+      // Prepare the query
+      const sql = `
+        INSERT INTO report 
+        (userId, username, judul, slug, isi, img, timestamp, email, jenis, urgensi, copy, status,provinsi, kabupaten) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const values = [
+        data.userId,
+        data.name,
+        data.title,
+        data.slug,
+        data.quil,
+        data.photo,
+        data.date,
+        data.email,
+        data.category,
+        data.scope,
+        data.head,
+        "Belum Dibaca",
+        data.provinsir,
+        data.kabupaten,
+      ];
+      await db.query(sql, values);
+      res.redirect("/dashboard/report");
+    } catch (err) {
+      console.error("Error inserting report message:", err);
+
+      res.redirect("/dashboard/report");
+    }
+  }
+);
+app.post("/dashboard/volunteer/add", auth, uploadfile, async (req, res) => {
+  const data = req.body;
+
+  try {
+    // Prepare the query
+    const sql = `
+       INSERT INTO volunteer (username, userId, fullname, pekerjaan, pendidikan, provinsi, kabupaten, deskripsi, essay, status,email)   
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+    const values = [
+      data.name,
+      data.userId,
+      data.fullname,
+      data.work,
+      data.graduate,
+      data.provinsir,
+      data.kabupaten,
+      data.desc,
+      data.essay,
+      "Belum Dibaca",
+      data.email,
+    ];
+    await db.query(sql, values);
+    res.redirect("/dashboard/volunteer");
+  } catch (err) {
+    console.error("Error inserting report message:", err);
+
+    res.redirect("/dashboard/volunteer");
+  }
+});
+
 app.get("/dashboard/maps/add", auth, (req, res) => {
   res.render("dashboard/post_place");
 });
@@ -244,6 +380,15 @@ app.get("/dashboard/report", auth, (req, res) => {
 });
 app.get("/dashboard/volunteer", auth, (req, res) => {
   res.render("dashboard/volunteer");
+});
+
+// Administrator Route
+app.get("/admin/login", (req, res) => {
+  res.render("admin/login.ejs");
+});
+app.post("/admin/access", masterAuth, (req, res) => {
+  req.session.isAdmin = true;
+  res.redirect("/master/control");
 });
 
 // Content Route from S3 Bucket

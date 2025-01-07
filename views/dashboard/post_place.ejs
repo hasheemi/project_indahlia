@@ -29,7 +29,31 @@
         </p>
       </div>
       <div class="main">
-        <form action="">
+        <form
+          action="/dashboard/maps/add"
+          enctype="multipart/form-data"
+          method="post"
+        >
+          <div class="input-group">
+            <div class="alpha">
+              <input
+                type="hidden"
+                name="provinsir"
+                id="provinsir"
+                value="ACEH"
+              />
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="render" value="dashboard/post_place" />
+              <input type="hidden" name="nom" value="plc" />
+            </div>
+          </div>
           <div class="input-group">
             <label for="title" class="title">Nama Tempat</label>
             <input type="text" id="title" name="title" required />
@@ -55,29 +79,31 @@
           </div>
           <div class="input-group input-row">
             <div class="input-col">
-              <label for="fungsi" class="title">jenis tempat</label>
-              <select id="fungsi" name="fungsi" required>
-                <option value="1">sungai</option>
-                <option value="2">danau</option>
-                <option value="3">telaga</option>
-                <option value="4">air terjun</option>
-                <option value="5">pantai</option>
-                <option value="6">kali</option>
-                <option value="7">irigasi</option>
+              <label for="jenis" class="title">jenis tempat</label>
+              <select id="jenis" name="jenis" required>
+                <option value="sungai">sungai</option>
+                <option value="danau">danau</option>
+                <option value="telaga">telaga</option>
+                <option value="air terjun">air terjun</option>
+                <option value="pantai">pantai</option>
+                <option value="sabana">sabana</option>
+                <option value="taman">taman</option>
               </select>
             </div>
             <div class="input-col">
               <label for="lingkungan" class="title">tingkat kebersihan</label>
               <select id="lingkungan" name="lingkungan" required>
-                <option value="1">semua bersih</option>
-                <option value="2">sebagian bersih</option>
-                <option value="3">tercemar sampah</option>
-                <option value="4">tercemar limbah pabrik</option>
+                <option value="semua bersih">semua bersih</option>
+                <option value="sebagian bersih">sebagian bersih</option>
+                <option value="tercemar sampah">tercemar sampah</option>
+                <option value="tercemar limbah pabrik">
+                  tercemar limbah pabrik
+                </option>
               </select>
             </div>
           </div>
           <div class="input-group">
-            <label class="title">Deskripsi Singkat</label>
+            <label for="desc" class="title">Deskripsi Singkat</label>
             <textarea name="desc" id="desc"></textarea>
           </div>
           <div class="input-group">
