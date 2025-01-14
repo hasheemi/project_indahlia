@@ -1,8 +1,9 @@
 .head h2 {
   font-size: 40px;
+  margin: 10px 0;
 }
 .head p {
-  font-size: 12px;
+  font-size: 13px;
   width: 40%;
   margin: 10px 0;
 }
@@ -36,6 +37,7 @@
 }
 .input-group textarea {
   min-height: 100px;
+  font-family: var(--body-font);
 }
 .input-group select option {
   text-transform: capitalize;
@@ -43,7 +45,7 @@
 .input-group .note {
   display: block;
   margin: 5px 0;
-  font-size: 11px;
+  font-size: 12px;
 }
 .input-group .ql-snow {
   background-color: white;
@@ -63,6 +65,11 @@
   display: flex;
   flex-direction: column;
   /* will-change: 100%; */
+}
+.input-col iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin: 20px 0;
 }
 /* .input-group; */
 .main .file-zone {

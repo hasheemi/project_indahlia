@@ -9,26 +9,36 @@ const { google } = require("googleapis");
 const fileUpload = require("express-fileupload");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const cors = require("cors");
+const { LRUCache } = require("lru-cache");
 require("dotenv").config();
-
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
 // Import Middleware
-const auth = require("./middlewares/auth");
-const uploadfile = require("./middlewares/upload_file");
-const storehtml = require("./middlewares/store_html");
-const getCoordinate = require("./middlewares/coordinat");
-const snippet = require("./middlewares/snippet");
-const summary = require("./middlewares/ai_summary");
-const masterAuth = require("./middlewares/masterAuth");
-
+const {
+  auth,
+  snippet,
+  storehtml,
+  getCoordinate,
+  summary,
+  masterAuth,
+} = require("./middlewares");
+// Import Helpers
+const { db, bucket, date } = require("./helpers");
+// Import Models
+const dashboardRoutes = require("./models/dashboard");
 // Initialize Express Server
 const app = express();
+exports.app = app;
 const port = process.env.APP_PORT;
-
-// Import Helper File
-const db = require("./helpers/db");
-const bucket = require("./helpers/bucket");
-
 // Import Middleware
+const cache = new LRUCache({
+  max: 25, // Maximum number of files to cache
+  ttl: 1000 * 60 * 10, // Time-to-live: 10 minutes
+});
+
 const proxy = createProxyMiddleware({
   router: (req) => new URL(req.path.substring(7)),
   pathRewrite: (path, req) => new URL(req.path.substring(7)).pathname,
@@ -70,10 +80,26 @@ const authUrl = authClient.generateAuthUrl({
   scope: scopes,
   include_granted_scopes: true,
 });
+app.use("/dashboard", dashboardRoutes);
+app.use("/", (req, res, next) => {
+  req.session.isLogin = req.session.isLogin || false;
+  next();
+});
 
 // Main App Route
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  let query = "SELECT * FROM class";
+  await db.query(query, (err, resu, field) => {
+    if (err) {
+      res.redirect("/");
+    } else {
+      res.render("index", {
+        post: resu,
+        dateFormat: date,
+        status: req.session.isLogin || false,
+      });
+    }
+  });
 });
 
 // Route For Blog Page
@@ -83,7 +109,11 @@ app.get("/blog", async (req, res) => {
     if (err) {
       res.redirect("/");
     } else {
-      res.render("blog", { post: resu });
+      res.render("blog", {
+        post: resu,
+        dateFormat: date,
+        status: req.session.isLogin || false,
+      });
     }
   });
 });
@@ -95,13 +125,30 @@ app.get("/blog/post/:slug&:id", async (req, res) => {
     if (err || resu.length == 0) {
       res.redirect("/");
     } else {
-      res.render("article", { data: resu });
+      res.render("article", {
+        data: resu,
+        dateFormat: date,
+        status: req.session.isLogin || false,
+      });
     }
   });
 });
-app.get("/blog/related", async (req, res) => {
-  let query = "SELECT * FROM blog";
-  await db.query(query, (err, resu, field) => {
+app.get("/blog/related/:id&:category", async (req, res) => {
+  let query = `
+  (SELECT DISTINCT * FROM blog 
+   WHERE kategori = ? 
+     AND id != ? 
+   ORDER BY timestamp DESC 
+   LIMIT 4)
+  UNION
+  (SELECT DISTINCT * FROM blog 
+   WHERE id != ? 
+   ORDER BY timestamp DESC 
+   LIMIT 4)
+  LIMIT 4;
+`;
+  let values = [req.params.category, req.params.id, req.params.id];
+  await db.query(query, values, (err, resu, field) => {
     if (err) {
       res.json({ error: 404 });
     } else {
@@ -110,11 +157,22 @@ app.get("/blog/related", async (req, res) => {
   });
 });
 // Route For Workshop Page
-app.get("/workshop", (req, res) => {
-  res.render("workshop");
+app.get("/workshop", async (req, res) => {
+  let query = "SELECT * FROM class";
+  await db.query(query, (err, resu, field) => {
+    if (err) {
+      res.redirect("/");
+    } else {
+      res.render("workshop", {
+        post: resu,
+        dateFormat: date,
+        status: req.session.isLogin || false,
+      });
+    }
+  });
 });
 
-app.get("/class/detail/:id/list", async (req, res) => {
+app.get("/workshop/class/detail/:id/list", async (req, res) => {
   await db.query(
     `SELECT * FROM lesson WHERE classId = ${req.params.id}`,
     (err, resu, field) => {
@@ -122,7 +180,7 @@ app.get("/class/detail/:id/list", async (req, res) => {
     }
   );
 });
-app.get("/class/detail/:id", async (req, res) => {
+app.get("/workshop/class/detail/:id", async (req, res) => {
   await db.query(
     `SELECT * FROM class WHERE classId = ${req.params.id}`,
     async (err, resu, field) => {
@@ -134,7 +192,7 @@ app.get("/class/detail/:id", async (req, res) => {
         );
         const bodytxt = await responsetxt.text();
         const responselist = await fetch(
-          `http://localhost:3025/class/detail/${req.params.id}/list`
+          `http://localhost:3025/workshop/class/detail/${req.params.id}/list`
         );
         const bodylist = await responselist.json();
 
@@ -142,6 +200,7 @@ app.get("/class/detail/:id", async (req, res) => {
           data: resu[0],
           body: bodytxt,
           list: bodylist,
+          status: req.session.isLogin || false,
         });
       }
     }
@@ -149,19 +208,19 @@ app.get("/class/detail/:id", async (req, res) => {
 });
 
 // Only For Development
-app.get("/class/lesson/:id", async (req, res) => {
+app.get("/workshop/class/:classId/lesson/:id", async (req, res) => {
   await db.query(
-    `SELECT * FROM class WHERE classId = ${req.params.id}`,
+    `SELECT * FROM lesson WHERE lessonId = ${req.params.id} AND classId = ${req.params.classId}`,
     async (err, resu, field) => {
       if (err || resu.length == 0) {
         res.redirect("/");
       } else {
         const responsetxt = await fetch(
-          "http://localhost:3025" + resu[0].syllabus
+          "http://localhost:3025" + resu[0].material
         );
         const bodytxt = await responsetxt.text();
         const responselist = await fetch(
-          `http://localhost:3025/class/detail/${req.params.id}/list`
+          `http://localhost:3025/workshop/class/detail/${req.params.classId}/list`
         );
         const bodylist = await responselist.json();
 
@@ -169,6 +228,7 @@ app.get("/class/lesson/:id", async (req, res) => {
           data: resu[0],
           body: bodytxt,
           list: bodylist,
+          status: req.session.isLogin || false,
         });
       }
     }
@@ -205,181 +265,19 @@ app.get("/maps/place/:id", async (req, res) => {
 
 // AI ChatBot Route
 app.get("/assistant", (req, res) => {
-  res.render("chat");
+  res.render("chat", { status: req.session.isLogin || false });
 });
+app.post("/ask", async function (req, res) {
+  const result = await model.generateContent(`
+    ${req.body.question}
+    
 
-app.get("/dashboard", auth, (req, res) => {
-  const { name, email, userId } = req.session;
-  res.render("dashboard/index", { name, email, userId });
-});
-app.get("/dashboard/blog", auth, (req, res) => {
-  const { name, email, userId } = req.session;
-  res.render("dashboard/blog", { name, email, userId });
-});
-app.get("/dashboard/blog/add", auth, (req, res) => {
-  const { name, email, userId } = req.session;
-  res.render("dashboard/post_article", { name, email, userId });
-});
-app.post(
-  "/dashboard/maps/add",
-  auth,
-  uploadfile,
-  getCoordinate,
-  async (req, res) => {
-    console.log(req.body);
-    const data = req.body;
-
-    try {
-      // Prepare the query
-      const sql = `
-      INSERT INTO place
-      (userId, username, nama, deskripsi, img, timestamp, email, koordinat, jenis, kondisi, link, notel, provinsi, kabupaten) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-      const values = [
-        data.userId,
-        data.name,
-        data.title,
-        data.desc,
-        data.photo,
-        data.date,
-        data.email,
-        data.koordinat,
-        data.jenis,
-        data.lingkungan,
-        data.link,
-        data.contact,
-        data.provinsir,
-        data.kabupaten,
-      ];
-      await db.query(sql, values);
-      res.redirect("/dashboard/maps");
-    } catch (err) {
-      console.error("Error inserting place post:", err);
-
-      res.redirect("/dashboard/maps/add");
-    }
-  }
-);
-app.post(
-  "/dashboard/blog/add",
-  auth,
-  uploadfile,
-  storehtml,
-  snippet,
-  summary,
-  async (req, res) => {
-    const data = req.body;
-
-    try {
-      // Prepare the query
-      const sql = `
-        INSERT INTO blog 
-        (userId, username, judul, slug, isi, img, timestamp, email, cuplikan, kategori, lingkup, summary) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-      const values = [
-        data.userId,
-        data.name,
-        data.title,
-        data.slug,
-        data.quil,
-        data.photo,
-        data.date,
-        data.email,
-        data.snippet,
-        data.category,
-        data.scope,
-        data.summary,
-      ];
-      await db.query(sql, values);
-      res.redirect("/dashboard/blog");
-    } catch (err) {
-      console.error("Error inserting blog post:", err);
-
-      res.redirect("/dashboard/blog/add");
-    }
-  }
-);
-app.post(
-  "/dashboard/report/add",
-  auth,
-  uploadfile,
-  storehtml,
-  async (req, res) => {
-    const data = req.body;
-
-    try {
-      // Prepare the query
-      const sql = `
-        INSERT INTO report 
-        (userId, username, judul, slug, isi, img, timestamp, email, jenis, urgensi, copy, status,provinsi, kabupaten) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-      const values = [
-        data.userId,
-        data.name,
-        data.title,
-        data.slug,
-        data.quil,
-        data.photo,
-        data.date,
-        data.email,
-        data.category,
-        data.scope,
-        data.head,
-        "Belum Dibaca",
-        data.provinsir,
-        data.kabupaten,
-      ];
-      await db.query(sql, values);
-      res.redirect("/dashboard/report");
-    } catch (err) {
-      console.error("Error inserting report message:", err);
-
-      res.redirect("/dashboard/report");
-    }
-  }
-);
-app.post("/dashboard/volunteer/add", auth, uploadfile, async (req, res) => {
-  const data = req.body;
-
-  try {
-    // Prepare the query
-    const sql = `
-       INSERT INTO volunteer (username, userId, fullname, pekerjaan, pendidikan, provinsi, kabupaten, deskripsi, essay, status,email)   
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
-    const values = [
-      data.name,
-      data.userId,
-      data.fullname,
-      data.work,
-      data.graduate,
-      data.provinsir,
-      data.kabupaten,
-      data.desc,
-      data.essay,
-      "Belum Dibaca",
-      data.email,
-    ];
-    await db.query(sql, values);
-    res.redirect("/dashboard/volunteer");
-  } catch (err) {
-    console.error("Error inserting report message:", err);
-
-    res.redirect("/dashboard/volunteer");
-  }
-});
-
-app.get("/dashboard/maps/add", auth, (req, res) => {
-  res.render("dashboard/post_place");
-});
-app.get("/dashboard/report", auth, (req, res) => {
-  res.render("dashboard/report");
-});
-app.get("/dashboard/volunteer", auth, (req, res) => {
-  res.render("dashboard/volunteer");
+    anda adalah pakar lingkungan hidup dan aktivis, jawab pertanyaan diatas , jangan sebutkan kalau anda pakar, boleh ada poin list namun jangan banyak banyak
+    `);
+  res.json({
+    status: "success",
+    res: result.response.candidates[0].content.parts[0].text,
+  });
 });
 
 // Administrator Route
@@ -391,18 +289,34 @@ app.post("/admin/access", masterAuth, (req, res) => {
   res.redirect("/master/control");
 });
 
-// Content Route from S3 Bucket
-app.get("/cdn/:file", (req, res) => {
-  bucket.readObject(req.params.file, async (err, data) => {
-    if (err) res.status(404).send("file not found");
-    res.type(req.params.file.split(".")[1]);
-    res.send(data.buffer);
-  });
-});
-
 //Proxy For Geodata
 app.get("/proxy/*", proxy, (req, res) => {
   res.send("hello");
+});
+app.get("/cdn/:file", async (req, res) => {
+  const fileName = req.params.file;
+  if (cache.has(fileName)) {
+    const cachedFile = cache.get(fileName);
+    res.type(fileName.split(".").pop());
+    return res.send(cachedFile);
+  }
+  bucket.readObject(fileName, async (err, data) => {
+    if (err) {
+      res.status(404).send("file not found");
+      console.error(err);
+      return;
+    }
+
+    try {
+      const mimeType = fileName.split(".").pop();
+      res.type(mimeType);
+      cache.set(fileName, data.buffer);
+      res.send(data.buffer);
+    } catch (e) {
+      res.status(500).send("Server error");
+      console.error(e);
+    }
+  });
 });
 
 // Google Oauth Login Route
@@ -432,6 +346,7 @@ app.get("/auth/google/callback", async (req, res) => {
                 req.session.isLogin = true;
                 req.session.name = resuu[0].name;
                 req.session.email = data.email;
+                req.session.profile = data.picture;
                 req.session.userId = resuu[0].id;
                 return res.redirect("/dashboard");
               }
@@ -450,6 +365,7 @@ app.get("/auth/google/callback", async (req, res) => {
         req.session.isLogin = true;
         req.session.name = data.given_name;
         req.session.email = data.email;
+        req.session.profile = data.picture;
         req.session.userId = resu.insertId;
         return res.redirect("/dashboard");
       }

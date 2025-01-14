@@ -1,24 +1,6 @@
 <div class="sidebar">
   <div class="logo-details">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 164 146"
-      class="icon"
-    >
-      <path
-        fill="#fff"
-        fill-rule="evenodd"
-        d="M128.236 1C45.498 1 1 110.266 1 142.106c12.715 0 24.648-2.446 35.717-6.747-.634 3.694-.953 6.945-.953 9.641C114.33 145 163 51.653 163 3.894c-12.705 0-24.508 2.577-35.387 7.054.414-3.486.623-6.815.623-9.948ZM36.717 135.359c5.707-33.223 36.927-102.202 90.896-124.411-4.87 41.055-38.054 103.88-90.896 124.411Z"
-        clip-rule="evenodd"
-      />
-      <path
-        fill="#fff"
-        d="M1 142.106H.5v.5H1v-.5ZM128.236 1h.5V.5h-.5V1ZM35.764 145h-.5v.5h.5v-.5ZM163 3.894h.5v-.5h-.5v.5ZM1.5 142.106c0-7.873 2.758-20.607 8.214-35.306 5.452-14.687 13.582-31.293 24.29-46.904C55.43 28.658 87.107 1.5 128.236 1.5v-1c-41.61 0-73.55 27.475-95.057 58.83C22.42 75.016 14.254 91.696 8.777 106.452 3.304 121.195.5 134.059.5 142.106h1Zm35.036-7.213c-11.015 4.28-22.886 6.713-35.536 6.713v1c12.78 0 24.774-2.458 35.898-6.781l-.362-.932ZM36.264 145c0-2.66.315-5.881.946-9.556l-.985-.169c-.638 3.711-.961 6.992-.961 9.725h1ZM162.5 3.894c0 23.748-12.116 58.921-34.056 88.163-21.933 29.234-53.61 52.443-92.68 52.443v1c39.497 0 71.438-23.464 93.48-52.843C151.281 63.285 163.5 27.907 163.5 3.894h-1Zm-34.697 7.516C138.626 6.956 150.365 4.394 163 4.394v-1c-12.774 0-24.642 2.591-35.577 7.091l.38.925ZM127.736 1c0 3.11-.208 6.42-.619 9.889l.993.118c.415-3.503.626-6.852.626-10.007h-1ZM37.21 135.444c2.841-16.539 12.046-42.028 27.28-66.154 15.235-24.127 36.461-46.83 63.313-57.88l-.38-.925c-27.117 11.16-48.484 34.05-63.779 58.271-15.295 24.222-24.554 49.834-27.42 66.519l.986.169Zm89.907-124.555c-2.425 20.439-11.906 46.336-27.38 69.685-15.472 23.348-36.905 44.102-63.2 54.319l.361.932c26.546-10.314 48.126-31.238 63.673-54.699 15.547-23.46 25.093-49.503 27.539-70.12l-.993-.117Z"
-      />
-    </svg>
+    <%- include('./logo.ejs') %>
     <div class="logo_name">Indahlia</div>
     <i class="bi bi-list" id="btn"></i>
   </div>
@@ -31,14 +13,14 @@
       <span class="tooltip">Dashboard</span>
     </li>
     <li>
-      <a href="/dashboard/blog">
+      <a href="/dashboard/article">
         <i class="bi bi-journal"></i>
         <span class="links_name">Artikel</span>
       </a>
       <span class="tooltip">Artikel</span>
     </li>
     <li>
-      <a href="/dashboard/maps">
+      <a href="/dashboard/place">
         <i class="bi bi-geo-alt"></i>
         <span class="links_name">Tempat</span>
       </a>
@@ -58,13 +40,18 @@
       </a>
       <span class="tooltip">Relawan</span>
     </li>
-
+    <li>
+      <a href="/dashboard/class">
+        <i class="bi bi-card-text"></i>
+        <span class="links_name">Kelas </span>
+      </a>
+      <span class="tooltip">Kelas</span>
+    </li>
     <li class="profile">
       <div class="profile-details">
-        <img src="./foto=pakdika.jpg" alt="profileImg" />
+        <img src="<%= profile %>" alt="profileImg" />
         <div class="name_job">
-          <div class="name">Prem Shahi</div>
-          <div class="job">Web designer</div>
+          <div class="name">Hasheemi Rafsanjani</div>
         </div>
       </div>
       <i class="bi bi-box-arrow-left" id="log_out"></i>

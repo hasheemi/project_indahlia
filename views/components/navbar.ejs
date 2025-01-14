@@ -1,11 +1,15 @@
 <nav class="navbar">
-  <a href="#" class="navbar-logo">Indahlia</a>
+  <a href="#" class="navbar-logo"> <%- include('./logo.ejs') %> Indahlia</a>
   <div class="navbar-nav">
     <a href="/">Tentang</a>
     <a href="/maps">Wisata Alam</a>
     <a href="/workshop">Pelatihan</a>
     <a href="/blog">Blog</a>
+    <% if (status == true) { %>
+    <a href="/dashboard" class="btn">Dashboard</a>
+    <% } else {%>
     <a href="/login" class="btn">Login</a>
+    <% }%>
   </div>
   <div class="navbar-extra">
     <a id="menu"><i class="bi bi-list"></i></a>

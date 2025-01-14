@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Kelola Kelas Anda</title>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/blog.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Kelola Kelas Anda</h2>
+        <p>
+          Dari sini anda bisa melihat semua kelas yang anda buat, anda juga bisa
+          menambahkan materi baru, mengedit dan menghapus
+        </p>
+      </div>
+
+      <div class="content"></div>
+      <a href="/dashboard/class/add">
+        <button><i class="bi bi-plus-lg"></i> Buat Kelas Baru</button>
+      </a>
+    </section>
+
+    <script>
+      // Data dari console
+      (async function () {
+        const req = await fetch("http://localhost:3025/dashboard/class/list");
+        const data = await req.json();
+
+        const container = document.querySelector(".content");
+        data.classes.forEach((kelas) => {
+          const box = document.createElement("div");
+          box.classList.add("box");
+          box.innerHTML = `
+          <div class="thumb">
+            <img src="${kelas.thumbnail}" alt="${kelas.className}" />
+          </div>
+          <div class="desc">
+            <h4>${kelas.className}</h4>
+            <span>${kelas.category}</span>
+          </div>
+        `;
+          container.appendChild(box);
+          kelas.lessons.forEach((lesson) => {
+            const lessonBox = document.createElement("div");
+            lessonBox.classList.add("box");
+            lessonBox.classList.add("child");
+            lessonBox.innerHTML = `
+            <div class="thumb">
+              <img src="${lesson.thumbnail}" alt="${lesson.title}" />
+            </div>
+            <div class="desc">
+              <h4>${lesson.title}</h4>
+            </div>
+          `;
+            container.appendChild(lessonBox);
+          });
+          container.innerHTML += `
+                  <a href="/dashboard/class/lesson/${kelas.classId}/add">
+        <button class="small"><i class="bi bi-plus-lg"></i> Tambah Materi</button>
+      </a>
+            `;
+        });
+      })();
+    </script>
+  </body>
+</html>

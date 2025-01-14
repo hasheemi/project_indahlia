@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Posting Artikel LIngkungan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/form.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Posting Artikel Anda</h2>
+        <p>
+          Tulis Artikel mengenai lingkungan hidup dengan berbagai kategori yang
+          dapat menyadarkan orang yang melihatnya untuk menjaga lingkungan
+        </p>
+      </div>
+      <div class="main">
+        <form
+          action="/dashboard/article/add"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="input-group">
+            <div class="alpha">
+              <input type="hidden" name="slug" id="slug" />
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="target" value="article" />
+              <input type="hidden" name="msg" value="Tambah" />
+              <input
+                type="hidden"
+                name="render"
+                value="dashboard/article/post"
+              />
+              <input type="hidden" name="nom" value="atc" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="title" class="title">judul</label>
+            <input type="text" id="title" name="title" required />
+          </div>
+          <div class="input-group">
+            <label for="photo" class="title">Foto Cover</label>
+            <div class="file-zone">
+              <p class="uplace">Drop file here or click to upload</p>
+              <input
+                type="file"
+                name="photo"
+                id="photo"
+                accept="image/*"
+                required
+              />
+            </div>
+            <span class="note"
+              >Gunakan gambar yang sesuai dan menarik (JPG,PNG,WEBP)</span
+            >
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="category" class="title">kategori</label>
+              <select id="category" name="category" required>
+                <option value="bencana">Bencana</option>
+                <option value="tokoh">Tokoh</option>
+                <option value="inovasu">Inovasi</option>
+                <option value="edukasi">Edukasi</option>
+                <option value="wisata">Wisata</option>
+              </select>
+            </div>
+            <div class="input-col">
+              <label for="scope" class="title">Lingkup</label>
+              <select id="scope" name="scope" required>
+                <option value="nasional">Nasional</option>
+                <option value="internasional">Internasional</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="title">Isi Artikel</label>
+            <input type="hidden" name="myquil" id="myquil" />
+            <div id="editor">
+              <p>Halo! Dunia</p>
+              <p>Saya Peduli <strong>Lingkungan</strong></p>
+              <p><br /></p>
+            </div>
+            <span class="note"
+              >Gunakan toolbar untuk mengatur heading, link, dll</span
+            >
+          </div>
+          <div class="button-group">
+            <button type="reset" class="reset">
+              <i class="bi bi-trash"></i> Reset
+            </button>
+            <button type="submit"><i class="bi bi-send"></i> Posting</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script src="/js/drag.js"></script>
+    <script src="/js/slug.js"></script>
+    <script>
+      var toolbarOptions = [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6
+        ["bold", "italic", "underline"], // Basic text formatting
+        ["blockquote", { script: "super" }, { script: "sub" }], // Blockquote, superscript, subscript
+        [{ list: "ordered" }, { list: "bullet" }], // Lists
+        [{ align: [] }], // Alignment
+        ["image"], // Image upload
+        ["clean"], // Clear formatting
+      ];
+
+      // Initialize Quill editor
+      var quill = new Quill("#editor", {
+        theme: "snow",
+        modules: {
+          toolbar: toolbarOptions,
+        },
+      });
+      const toolbar = quill.getModule("toolbar");
+      toolbar.addHandler("image", function () {
+        const url = prompt("Enter the image URL:");
+        if (url) {
+          const range = quill.getSelection(); // Get current cursor position
+          quill.insertEmbed(range.index, "image", url); // Insert image
+        }
+      });
+
+      quill.on("text-change", function () {
+        var htmlContent = quill.root.innerHTML;
+        document.querySelector("#myquil").value = htmlContent;
+      });
+
+      // document.getElementById("submit").onclick = () => {
+      //   document.getElementById("res").value = `${quill.root.innerHTML}`;
+      // };
+    </script>
+  </body>
+</html>

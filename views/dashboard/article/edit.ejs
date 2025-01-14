@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <%- include('../components/exstyles') %>
+    <%- include('../../components/exstyles') %>
     <title>Posting Artikel LIngkungan</title>
     <link
       href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
@@ -18,19 +18,19 @@
     <link rel="stylesheet" href="/css/sidebar.css" />
   </head>
   <body>
-    <%- include('../components/sidebar') %>
+    <%- include('../../components/sidebar',{profile}) %>
     <section class="home-section">
       <div class="head">
-        <h2>Kirim Laporan Kepada Admin</h2>
+        <h2>Edit Artikel Anda</h2>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          tempora dolores pariatur dignissimos reprehenderit quibusdam quod?
-          Labore, aliquid illo.
+          <%= data.judul %> <br />Ubah Judul, Kategori maupun Isi jika terjadi
+          kesalahan. Maaf kami tidak menyediakan edit Foto Cover karena
+          terbatasnya biaya
         </p>
       </div>
       <div class="main">
         <form
-          action="/dashborad/volunteer/add"
+          action="/dashboard/article/<%= data.id %>/edit"
           method="post"
           enctype="multipart/form-data"
         >
@@ -38,69 +38,66 @@
             <div class="alpha">
               <input
                 type="hidden"
-                name="date"
-                value="<%= new Date().getTime(); %>"
+                name="slug"
+                id="slug"
+                value="<%= data.slug %>"
               />
               <input
                 type="hidden"
-                name="provinsir"
-                id="provinsir"
-                value="ACEH"
+                name="date"
+                value="<%= new Date().getTime(); %>"
               />
               <input type="hidden" name="email" value="<%= email %>" />
               <input type="hidden" name="name" value="<%= name %>" />
               <input type="hidden" name="userId" value="<%= userId %>" />
-              <input type="hidden" name="render" value="dashboard/volunteer" />
-              <input type="hidden" name="nom" value="vlt" />
+              <input type="hidden" name="articleId" value="<%= data.id %>" />
+              <input
+                type="hidden"
+                name="render"
+                value="dashboard/article/edit"
+              />
+              <input type="hidden" name="nom" value="atc" />
+              <input type="hidden" name="target" value="article" />
+              <input type="hidden" name="msg" value="Edit" />
             </div>
           </div>
           <div class="input-group">
-            <label for="fullname" class="title">Nama Lengkap</label>
-            <input type="text" id="fullname" name="fullname" required />
-            <span class="note">Lorem ipsum dolor sit amet.</span>
+            <label for="title" class="title">judul</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              value="<%= data.judul %>"
+            />
           </div>
+
           <div class="input-group input-row">
             <div class="input-col">
-              <label for="work" class="title">Pekerjaan Saat Ini</label>
-              <select id="work" name="work" required>
-                <option value="1">Konten Kreator Edukasi</option>
-                <option value="2">Aktivis Lingkungan</option>
-                <option value="3">Guru / Dosen</option>
-                <option value="4">Mahasiswa</option>
-                <option value="5">Peternak / Petani</option>
-                <option value="6">Pekerjaan Lainnya</option>
+              <label for="category" class="title">kategori</label>
+              <select id="category" name="category" required>
+                <option value="bencana">Bencana</option>
+                <option value="tokoh">Tokoh</option>
+                <option value="inovasu">Inovasi</option>
+                <option value="edukasi">Edukasi</option>
+                <option value="wisata">Wisata</option>
               </select>
             </div>
             <div class="input-col">
-              <label for="graduate" class="title">Riwayat Pendidikan</label>
-              <select id="graduate" name="graduate" required>
-                <option value="1">S1 / D3 / D4</option>
-                <option value="2">S2 (Magister)</option>
-                <option value="3">S3 (Doktor)</option>
-                <option value="4">SMA / SMK</option>
-                <option value="5">Otodidak</option>
+              <label for="scope" class="title">Lingkup</label>
+              <select id="scope" name="scope" required>
+                <option value="nasional">Nasional</option>
+                <option value="internasional">Internasional</option>
               </select>
-            </div>
-          </div>
-          <div class="input-group input-row">
-            <div class="input-col">
-              <label for="provinsi" class="title">Provinsi</label>
-              <select id="provinsi" name="provinsi" required></select>
-            </div>
-            <div class="input-col">
-              <label for="kabupaten" class="title">kabupaten</label>
-              <select id="kabupaten" name="kabupaten" required></select>
             </div>
           </div>
           <div class="input-group">
-            <label for="desc" class="title"
-              >Deskripsi Singkat Tentang Diri Anda</label
+            <label class="title">Isi Artikel</label>
+            <input type="hidden" name="myquil" id="myquil" value="<%= isi %>" />
+            <div id="editor"><%- isi %></div>
+            <span class="note"
+              >Gunakan Toolbar untuk mengatur Heading, link dll</span
             >
-            <textarea name="desc" id="desc"></textarea>
-          </div>
-          <div class="input-group">
-            <label for="essay" class="title">Essay Lingkungan</label>
-            <input type="file" name="essay" id="essay" required />
           </div>
           <div class="button-group">
             <button type="reset" class="reset">
@@ -111,7 +108,8 @@
         </form>
       </div>
     </section>
-    <script src="/js/select.js"></script>
+    <script src="/js/drag.js"></script>
+    <script src="/js/slug.js"></script>
     <script>
       var toolbarOptions = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6

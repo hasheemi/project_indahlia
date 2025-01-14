@@ -16,11 +16,22 @@
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
-    <%- include('components/navbar') %>
-    <div class="hero">
+    <%- include('components/navbar',{status}) %>
+    <div
+      class="hero"
+      style="
+        background-image: linear-gradient(
+            to bottom,
+            rgb(0, 0, 0),
+            rgba(0, 0, 0, 0.342) 55%,
+            rgb(0, 0, 0)
+          ),
+          url('<%= data.banner%>');
+      "
+    >
       <div class="content"></div>
       <div class="thumbnail">
-        <img src="/img/leaf.jpg" alt="Thumbnail Kelas" />
+        <img src="<%= data.thumbnail %>" alt="Thumbnail Kelas" />
       </div>
     </div>
 
@@ -31,37 +42,46 @@
         <div class="about">
           <div class="box">
             <span class="what">Materi </span>
-            <span class="ans"><i class="bi bi-layout-text-sidebar"></i> 4</span>
+            <span class="ans"
+              ><i class="bi bi-layout-text-sidebar"></i><%= list.length %></span
+            >
           </div>
           <div class="box">
             <span class="what">Tema </span>
-            <span class="ans"><i class="bi bi-lightbulb"></i> Daur Ulang</span>
+            <span class="ans"
+              ><i class="bi bi-lightbulb"></i><%= data.category %></span
+            >
           </div>
           <div class="box">
             <span class="what">Kesulitan </span>
-            <span class="ans"> <i class="bi bi-graph-up"></i> Mudah</span>
+            <span class="ans">
+              <i class="bi bi-graph-up"></i> <%= data.difficulty %></span
+            >
           </div>
           <div class="box">
             <span class="what">Peserta </span>
-            <span class="ans"> <i class="bi bi-person"></i>123 Orang</span>
+            <span class="ans"> <i class="bi bi-person"></i>5 Orang</span>
           </div>
         </div>
         <h3>Silabus Kelas</h3>
         <div class="main"><%- body %></div>
+        <div class="summary">
+          <div class="head">
+            <span>Rangkuman AI</span><i class="bi bi-stars"></i>
+          </div>
+          <p><%= data.summary %></p>
+        </div>
         <h3>Mentor</h3>
         <div class="mentor">
           <div class="header">
             <img src="/img/leaf.jpg" alt="Mentor Photo" class="profile-photo" />
             <div class="info">
-              <h6>Goat Yafi Santos</h6>
-              <p>Penghuni Puncak EPL</p>
+              <h6><%= data.username %></h6>
+              <p>Edukator</p>
             </div>
           </div>
           <div class="desc">
-            <p>
-              Saya setiap hari selalu rajin membuka jibas sebagai sarapan Lorem
-              ipsum dolor sit amet, consectetur adipisicing.
-            </p>
+            <p>Saya setiap hari selalu rajin</p>
             <a
               href="https://www.linkedin.com/in/ryancurtis"
               class="mentor-contact"
@@ -74,7 +94,7 @@
       <div class="info">
         <h3>Video Pembuka</h3>
         <iframe
-          src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
+          src="<%= data.youtube %>"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -84,21 +104,25 @@
         <h3>Daftar Materi</h3>
         <ul class="step">
           <% list.forEach(function(item) { %>
-          <li><%= item.title %></li>
+          <a
+            href="/workshop/class/<%= data.classId %>/lesson/<%= item.lessonId %>"
+          >
+            <li><%= item.judul %></li>
+          </a>
           <% }); %>
         </ul>
         <h3>Gabung Kelas Ini</h3>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-          possimus tempora sed dolorum ea assumenda rem porro accusamus sapiente
-          quo, veniam modi fugiat.
+          Dapatkan ilmu yang berharga tentang lingkungan hidup untuk membuka
+          wawasan anda dengan gratis tanpa biaya, segera join sekarang, semoga
+          menjadi ilmu yang berguna dan bermanfaat
         </p>
         <a href="/class/join/">
           <button>Join Kelas</button>
         </a>
       </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
 
     <script src="/js/navbar.js"></script>
     <script></script>

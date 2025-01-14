@@ -12,7 +12,7 @@
     <title><%= data[0].judul %></title>
   </head>
   <body>
-    <%- include('components/navbar') %>
+    <%- include('components/navbar',{status}) %>
     <input type="hidden" id="url" value="<%= data[0].isi %>" />
     <div class="hero">
       <div class="content"></div>
@@ -21,15 +21,24 @@
       <div class="left">
         <img src="<%= data[0].img %>" alt="Gambar <%= data[0].judul %>" />
         <div class="bread">
-          <span>Home</span>
+          <span>Beranda</span>
           <span><i class="bi bi-chevron-right"></i></span>
-          <span>World</span>
+          <span><%= data[0].lingkup || "Nasional" %></span>
+          <span><i class="bi bi-chevron-right"></i></span>
+          <span><%= data[0].kategori || "Bencana" %></span>
         </div>
         <h1><%= data[0].judul %></h1>
         <span class="meta"
-          >Diposting oleh Hasheeemi &bull; 24 Desember 2024</span
+          >Diposting oleh <%= data[0].username %> &bull; <%=
+          dateFormat(data[0].timestamp) %></span
         >
         <div class="content"></div>
+        <div class="summary">
+          <div class="head">
+            <span>Rangkuman AI</span><i class="bi bi-stars"></i>
+          </div>
+          <p><%= data[0].summary %></p>
+        </div>
         <h3>bagikan artikel ini</h3>
         <div class="share-buttons">
           <a
@@ -79,7 +88,7 @@
         <div class="container"></div>
       </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
     <script src="/js/navbar.js"></script>
     <script>
       window.onload = async () => {
@@ -87,13 +96,16 @@
         let main = document.querySelector(".main .left .content");
         let req = await fetch(url);
         let res = await req.text();
-        let full = res.split("\n");
-        full.forEach((e) => {
-          main.innerHTML += `<p>${e}</p>`;
-        });
+        main.innerHTML += res;
+        // let full = res.split("\n");
+        // full.forEach((e) => {
+        //   main.innerHTML += `<p>${e}</p>`;
+        // });
 
         let container = document.querySelector(".main .right .container");
-        let relatedurl = await fetch("/blog/related");
+        let relatedurl = await fetch(
+          "/blog/related/<%= data[0].id %>&<%= data[0].kategori %>"
+        );
         let resrelated = await relatedurl.json();
         resrelated.forEach((e) => {
           container.innerHTML += `

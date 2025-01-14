@@ -16,11 +16,22 @@
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
-    <%- include('components/navbar') %>
-    <div class="hero">
+    <%- include('components/navbar',{status}) %>
+    <div
+      class="hero"
+      style="
+        background-image: linear-gradient(
+            to bottom,
+            rgb(0, 0, 0),
+            rgba(0, 0, 0, 0.342) 55%,
+            rgb(0, 0, 0)
+          ),
+          url('<%= data.banner%>');
+      "
+    >
       <div class="content"></div>
       <div class="thumbnail">
-        <img src="/img/leaf.jpg" alt="Thumbnail Kelas" />
+        <img src="<%= data.thumbnail %>" alt="Thumbnail Kelas" />
       </div>
     </div>
 
@@ -29,7 +40,7 @@
         type="hidden"
         name="quiz-url"
         id="quiz-url"
-        value="/cdn/mengenal-jenis-jenis-toga-quiz-lsn-1734241752608.json"
+        value="<%= data.quiz %>"
       />
       <div class="silabus">
         <h2><%= data.title %></h2>
@@ -48,9 +59,9 @@
             >
           </div>
         </div>
-        <div class="tray materi hidden">
+        <div class="tray materi">
           <iframe
-            src="https://www.youtube.com/embed/kqco4YpJb7U?si=X0V9dEFngXzWwycP"
+            src="<%= data.youtube %>"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -58,13 +69,19 @@
             allowfullscreen
           ></iframe>
           <%- body %>
+          <div class="summary">
+            <div class="head">
+              <span>Rangkuman AI</span><i class="bi bi-stars"></i>
+            </div>
+            <p><%= data.summary %></p>
+          </div>
         </div>
         <div class="tray quiz hidden">
           <div id="quiz-container"></div>
           <button id="submit-btn">Finish Quiz</button>
           <div id="result"></div>
         </div>
-        <div class="tray diskusi">
+        <div class="tray diskusi hidden">
           <div class="comment-container">
             <!-- Comment Form -->
             <div class="comment-form">
@@ -91,12 +108,12 @@
             </ul>
           </div>
         </div>
-        <h3>Mentor</h3>
+        <!-- <h3>Mentor</h3>
         <div class="mentor">
           <div class="header">
             <img src="/img/leaf.jpg" alt="Mentor Photo" class="profile-photo" />
             <div class="info">
-              <h6>Goat Yafi Santos</h6>
+              <h6><%=  %></h6>
               <p>Penghuni Puncak EPL</p>
             </div>
           </div>
@@ -112,18 +129,22 @@
               <button class="small">Kontak</button>
             </a>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="info">
         <h3>Daftar Materi</h3>
         <ul class="step">
           <% list.forEach(function(item) { %>
-          <li><%= item.title %></li>
+          <a
+            href="/workshop/class/<%= data.classId %>/lesson/<%= item.lessonId %>"
+          >
+            <li><%= item.judul %></li>
+          </a>
           <% }); %>
         </ul>
       </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
 
     <script src="/js/navbar.js"></script>
     <script src="/js/tray.js"></script>

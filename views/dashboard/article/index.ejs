@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Kelola Artikel</title>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/blog.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Kelola Artikel Anda</h2>
+        <p>
+          Anda bisa melihat semua Artikel yang anda posting, jika terjadi
+          kesalahan anda dapat mengedit maupun menghapus Artikel tersebut. Terus
+          semangat dalam melestarikan lingkungan
+        </p>
+      </div>
+
+      <div class="content">
+        <% post.forEach((e,i) => { %>
+        <div class="box">
+          <div class="thumb">
+            <img src="<%= e.img %>" alt="" />
+          </div>
+          <div class="desc">
+            <h4><%= e.judul %></h4>
+            <span><%= e.kategori %></span>
+          </div>
+          <div class="action">
+            <a href="/dashboard/article/<%= e.id %>/edit">
+              <div class="btn edit" title="Edit Artikel">
+                <i class="bi bi-pencil"></i>
+              </div>
+            </a>
+            <a href="/dashboard/article/<%= e.id %>/delete">
+              <div class="btn delete" title="Hapus Artikel">
+                <i class="bi bi-trash3"></i>
+              </div>
+            </a>
+            <a href="/blog/post/<%= e.slug %>&<%= e.id %>" target="_blank">
+              <div class="btn visit" title="Lihat Artikel">
+                <i class="bi bi-eye"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <a href="/dashboard/article/add">
+        <button><i class="bi bi-plus-lg"></i> Tambah Artikel</button>
+      </a>
+    </section>
+  </body>
+</html>

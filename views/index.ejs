@@ -11,17 +11,17 @@
     <title>Indahlia: Sistem Informasi Untuk Lingkungan yang Lebih Bersih</title>
   </head>
   <body>
-    <%- include('components/navbar') %>
+    <%- include('components/navbar',{status}) %>
     <div class="hero">
       <div class="content">
         <h1>
           Terus Bergerak <br />
-          Bersih Berdampak
+          Tumbuh Berdampak
         </h1>
         <p>
           Kesadaran lingkungan masyarakat saat ini mungkin perlu dipertanyakan,
           berbagai bencana disebabakan oleh kelalaian manusia, mari bersama
-          menatata kembali lingkungan menjadi lebih asri dan bersih. Biarkan
+          menata kembali lingkungan menjadi lebih asri dan bersih. Biarkan
           bungan dahlia mekar nan indah
         </p>
         <button>lebih lanjut</button>
@@ -50,7 +50,7 @@
       <div class="left">
         <div class="list">
           <div class="toast">
-            <div class="icon"><i class="bi bi-eye"></i></div>
+            <div class="icon"><i class="bi bi-trash"></i></div>
             <span>Implementing</span>
           </div>
           <div class="toast">
@@ -58,7 +58,7 @@
             <span>Reporting</span>
           </div>
           <div class="toast">
-            <div class="icon"><i class="bi bi-table"></i></div>
+            <div class="icon"><i class="bi bi-easel2"></i></div>
             <span>Educating</span>
           </div>
         </div>
@@ -75,9 +75,8 @@
           itu kami memulai dengan menerima pengaduan terkait pencemaran
           lingkungan , memberikan edukasi kepada masyarakat luas terkait
           kebersihan dan juga mengumpulkan relawan untuk memulai aksi nyata
-          membersihkan sumber air yang tercemar
+          membersihkan lingkungan yang tercemar
         </p>
-        <!-- <button>lebih lanjut</button> -->
       </div>
     </section>
     <section class="layout destination">
@@ -85,7 +84,8 @@
       <p>
         Indonesia memiliki objek wisata yang menjadi daya tarik wisatawan baik
         domestik maupun mancanegara. Sudah sepatutnya kita bangga dan merasa
-        bertanggung jawab atas kebersihan objek wisata tersebut
+        bertanggung jawab atas kebersihan objek wisata tersebut lihat lebih
+        banyak di <a href="/maps">Destinasi Alam</a>
       </p>
       <div class="container">
         <div class="card">
@@ -183,7 +183,7 @@
       <p>
         Jangan sampai ketinggalan berita terupdate soal lingkungan dan inovasi
         teknologi untuk lingkungan hidup. Tingkatkan rasa peduli anda terhadap
-        lingkungan. Baca selengkapnya di blog Jagatirta
+        lingkungan. Baca selengkapnya di <a href="/blog">Blog Indahlia</a>
       </p>
       <div class="container">
         <div class="left">
@@ -233,7 +233,7 @@
         </div>
       </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
     <script src="/js/navbar.js"></script>
     <script src="/js/index.js"></script>
   </body>

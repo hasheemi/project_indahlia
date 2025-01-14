@@ -15,14 +15,13 @@
     </title>
   </head>
   <body>
-    <%- include('components/navbar') %>
+    <%- include('components/navbar',{status}) %>
     <div class="hero">
       <div class="content">
         <h1>Pelatihan Ilmu Lingkungan</h1>
         <p>
-          Temukan berita terupdate apa saja yang terjadi di Indonesia terkait
-          lingkungan hidup dan tambah wawasan anda mengenai inovasi di bidang
-          teknologi bagi lingkungan
+          Ikuti pelatihan tentang lingkungan hidup dari kami untuk menambah
+          wawasan anda serta menambah skill yang berguna untuk kehidupan
         </p>
       </div>
     </div>
@@ -41,104 +40,85 @@
     </section>
     <section class="layout container">
       <!-- Card 1 -->
+      <% post.forEach(e => { %>
       <div class="card">
-        <img src="/img/danau.jpeg" alt="Course Thumbnail" class="card-image" />
+        <img
+          src="<%= e.thumbnail %>"
+          alt="Course Thumbnail"
+          class="card-image"
+        />
         <div class="card-content">
-          <p class="author">By Ahmad Hakim</p>
-          <h3>Membangun Aplikasi Cek Ongkir Menggunakan...</h3>
+          <p class="author">Oleh <%= e.username %></p>
+          <h3><%= e.judul %></h3>
           <div class="info">
-            <p>Intermediate &bull; 1 Jam</p>
-            <p>715 Siswa &bull; 13 Modul</p>
+            <p><%= e.difficulty %> &bull; <%= e.category %></p>
+            <p>5 Siswa &bull; 2 Modul</p>
           </div>
           <div class="rating">
-            <span>⭐ 4.8</span>
-            <button class="small">detail</button>
+            <a href="/workshop/class/detail/<%= e.classId %>">
+              <button class="small">detail</button>
+            </a>
           </div>
         </div>
       </div>
-      <!-- Card 2 -->
-      <div class="card">
-        <img src="/img/danau.jpeg" alt="Course Thumbnail" class="card-image" />
-        <div class="card-content">
-          <p class="author">By Muhammad Singgih Z.A</p>
-          <h3>Memahami Cara Kerja Tim IT di Perusahaan yang...</h3>
-          <div class="info">
-            <p>Intermediate &bull; 1 Jam</p>
-            <p>428 Siswa &bull; 22 Modul</p>
-          </div>
-          <div class="rating">
-            <span>⭐ 4.8</span>
-            <button class="small">detail</button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <img src="/img/danau.jpeg" alt="Course Thumbnail" class="card-image" />
-        <div class="card-content">
-          <p class="author">By Muhammad Singgih Z.A</p>
-          <h3>Memahami Cara Kerja Tim IT di Perusahaan yang...</h3>
-          <div class="info">
-            <p>Intermediate &bull; 1 Jam</p>
-            <p>428 Siswa &bull; 22 Modul</p>
-          </div>
-          <div class="rating">
-            <span>⭐ 4.8</span>
-            <button class="small">detail</button>
-          </div>
-        </div>
-      </div>
+      <% }) %>
     </section>
     <section class="layout promotion">
       <div class="feature">
         <h2>Bantu Pulihkan Lingkungan dengan Ilmu Pengetahuan</h2>
         <p>
-          Lorem ipsum dolor sit a dignissimos. Dolorum consequatur aliquid
-          soluta fugiat delectus! Lorem ipsum dolor sit amet consectetur.
+          Keuntungan yang anda dapatkan ketika belajar melalui Indahlia Workshop
+          antara lain
         </p>
         <ul>
-          <li>sss,s</li>
-          <li>msmsm</li>
-          <li>jsk</li>
+          <li>100% Gratis</li>
+          <li>Tersedia Materi yang Lengkap</li>
+          <li>Evaluasi dan Diskusi</li>
         </ul>
       </div>
       <div class="review">
         <div class="review-card">
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem,
-            molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Nihil inventore officia dolor ab!
+            Saya mulai menyadari betapa pentingnya ilmu teknik lingkungan,
+            meskipun hanya dasar namun bisa dikembangkan ke arah yang lebih baik
           </p>
           <div class="star">
             <i class="bi bi-star-fill"></i>
             <i class="bi bi-star-fill"></i>
             <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
           </div>
-          <span>Arifin Husain &bull; <i>Kelas Daur Ulang</i></span>
+          <span
+            >Arifin Husain &bull; <i>Kelas Pengantar Teknik LIngkungan</i></span
+          >
         </div>
         <div class="review-card">
           <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem,
-            molestiae! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Nihil inventore officia dolor ab!
+            Bagus, Saya mendapat inspirasi untuk mengolah semua botol bekas yang
+            ada di rumah, mantappp
           </p>
           <div class="star">
             <i class="bi bi-star-fill"></i>
             <i class="bi bi-star-fill"></i>
             <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
           </div>
-          <span>Arifin Husain &bull; <i>Kelas Daur Ulang</i></span>
+          <span
+            >Nur Fitria &bull; <i>Kelas Mengolah Plastik Menjadi Cuan</i></span
+          >
         </div>
       </div>
       <div class="quote">
         <img src="/img/mangrove.jpg" alt="" />
         <blockquote>
-          Anjay kelas Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Sapiente, eos? Lorem ipsum dolor sit amet, consectetur adipisicing.
-          <span>~ Goat Yafi Santos El Jibas</span>
+          Warisan paling istimewa bagi generasi berikutnya adalah lingkungan
+          yang lestari dan terjaga
+          <span>~ Anonymous</span>
         </blockquote>
       </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
     <script src="/js/navbar.js"></script>
   </body>
 </html>

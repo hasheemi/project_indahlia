@@ -14,7 +14,7 @@
     </title>
   </head>
   <body>
-    <%- include('components/navbar') %>
+    <%- include('components/navbar',{status}) %>
     <div class="hero">
       <div class="content">
         <h1>Artikel lingkungan</h1>
@@ -82,34 +82,19 @@
         <a href="<%= `/blog/post/${e.slug}&${e.id}` %>">
           <img src="<%= e.img %>" alt="" />
           <div class="desc">
-            <span class="category">Economy</span>
+            <span class="category"><%= e.kategori %></span>
             <h4><%= e.judul %></h4>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id quia
-              facere tempora hic sit.
+              <%= e.cuplikan || `Lorem ipsum, dolor sit amet consectetur
+              adipisicing elit. Id quia facere tempora hic sit.` %>
             </p>
-            <span class="author">@Hasheemi</span>
-          </div>
-        </a>
-      </div>
-      <% }) %> <% post.forEach(e => { %>
-      <div class="post" id="<%= e.id %>">
-        <a href="<%= `/blog/post/${e.slug}&${e.id}` %>">
-          <img src="<%= e.img %>" alt="" />
-          <div class="desc">
-            <span class="category">Economy</span>
-            <h4><%= e.judul %></h4>
-            <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem unde
-              ullam dolor tenetur facilis!
-            </p>
-            <span class="author">@Hasheemi</span>
+            <span class="author"><%= dateFormat(e.timestamp) %></span>
           </div>
         </a>
       </div>
       <% }) %>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
     <script src="/js/navbar.js"></script>
   </body>
 </html>

@@ -175,7 +175,8 @@
   display: block;
   color: var(--blue);
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 700;
+  text-transform: capitalize;
   margin: 10px 0;
 }
 .author {

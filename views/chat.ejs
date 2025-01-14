@@ -10,49 +10,94 @@
     <link rel="stylesheet" href="/css/chat.css" />
     <link rel="stylesheet" href="/css/navbar.css" />
     <link rel="stylesheet" href="/css/footer.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   </head>
   <body>
     <%- include('components/navbar') %>
     <div class="hero">
       <div class="content">
-        <h1>Artikel lingkungan</h1>
+        <h1>IndahliAI chatbot</h1>
         <p>
-          Temukan berita terupdate apa saja yang terjadi di Indonesia terkait
-          lingkungan hidup dan tambah wawasan anda mengenai inovasi di bidang
-          teknologi bagi lingkungan
+          Tanyakan mengenai lingkungan, ekosistem, bioekologi dan pertanyaan
+          lainnya, di desain menggunakan gemini untuk menjawab pertanyaan anda
+          seputar lingkungan
         </p>
       </div>
     </div>
     <section class="layout chat-container">
-      <div class="chat-box" id="chatBox">
+      <div class="chat-box" id="chat-box">
         <!-- Chat messages -->
+        <div class="chat-message user-message">
+          <div>Halo IndahliAI</div>
+        </div>
         <div class="chat-message ai-message">
           <div>
-            <h4>Jawaban AI</h4>
-            Hello! How can I help you today?
+            <h4>Jawaban AI <i class="bi bi-stars"></i></h4>
+            Hai apa yang bisa saya bantu hari ini
 
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-              ratione accusantium quisquam! Ratione est quis quidem dolorem
-              voluptatibus rem dolores!
+              saya bisa menjawab pertanyaan mengenai lingkungan hidup, ekologi,
+              biologi dll
             </p>
           </div>
         </div>
-        <div class="chat-message user-message">
-          <div>Can you explain data science?</div>
-        </div>
       </div>
-      <form class="chat-form" id="chatForm">
+      <div class="chat-form" id="chatForm">
         <input
           type="text"
           class="chat-input"
-          id="chatInput"
+          id="chat-input"
           placeholder="Type your message here..."
         />
-        <button type="submit" class="chat-submit">Send</button>
-      </form>
+        <button type="submit" class="chat-submit" onclick="sendQuestion()">
+          Kirim
+        </button>
+      </div>
     </section>
-    <%- include('components/footer') %>
+    <%- include('components/float') %> <%- include('components/footer') %>
     <script src="/js/navbar.js"></script>
+    <script>
+      async function sendQuestion() {
+        const questionInput = document.getElementById("chat-input");
+        const question = questionInput.value;
+        const chatContainer = document.getElementById("chat-box");
+
+        try {
+          chatContainer.innerHTML += `
+     <div class="chat-message user-message">
+         ${marked.parse(question)}
+          </div>
+        </div>
+    `;
+          const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ question }),
+          });
+
+          const data = await response.json();
+          if (data) {
+            displayResponse(data.res);
+          } else {
+            displayResponse("Error: ");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          displayResponse("An error occurred while sending the question.");
+        }
+        questionInput.value = "";
+      }
+      function displayResponse(reply) {
+        const chatContainer = document.getElementById("chat-box");
+        chatContainer.innerHTML += `
+     <div class="chat-message ai-message">
+         ${marked.parse(reply)}
+          </div>
+        </div>
+    `;
+      }
+    </script>
   </body>
 </html>

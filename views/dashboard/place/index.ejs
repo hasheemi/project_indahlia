@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Kelola Tempat yang Anda Tambahkan</title>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/blog.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Kelola Tempat yang Anda Tambahkan</h2>
+        <p>
+          Anda bisa melihat semua Tempat yang anda tambahkan, jika terjadi
+          kesalahan anda dapat mengedit maupun menghapus tempat tersebut. Terus
+          semangat mempromosikan wisata alam daerah yang bersih dan asri
+        </p>
+      </div>
+
+      <div class="content">
+        <% post.forEach((e,i) => { %>
+        <div class="box">
+          <div class="thumb">
+            <img src="<%= e.img %>" alt="" />
+          </div>
+          <div class="desc">
+            <h4><%= e.nama %></h4>
+            <span><%= e.jenis %></span>
+          </div>
+          <div class="action">
+            <a href="/dashboard/place/<%= e.id %>/edit">
+              <div class="btn edit" title="Edit Tempat">
+                <i class="bi bi-pencil"></i>
+              </div>
+            </a>
+            <a href="/dashboard/place/<%= e.id %>/delete">
+              <div class="btn delete" title="Hapus Tempat">
+                <i class="bi bi-trash3"></i>
+              </div>
+            </a>
+            <a href="/maps" target="_blank">
+              <div class="btn visit" title="Lihat Tempat">
+                <i class="bi bi-eye"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <a href="/dashboard/place/add">
+        <button><i class="bi bi-plus-lg"></i> Tambah Tempat Menarik</button>
+      </a>
+    </section>
+  </body>
+</html>

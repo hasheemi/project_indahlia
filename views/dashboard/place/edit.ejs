@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <%- include('../components/exstyles') %>
-    <title>Posting Destinasi WIsata Alam</title>
+    <%- include('../../components/exstyles') %>
+    <title>Edit Destinasi Wisata Alam : <%= data.nama %></title>
     <link
       href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
       rel="stylesheet"
@@ -18,19 +18,20 @@
     <link rel="stylesheet" href="/css/sidebar.css" />
   </head>
   <body>
-    <%- include('../components/sidebar') %>
+    <%- include('../../components/sidebar',{profile}) %>
     <section class="home-section">
       <div class="head">
-        <h2>Tambah Destinasi Wisata Alam</h2>
+        <h2>Edit Destinasi Wisata Alam</h2>
+
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          tempora dolores pariatur dignissimos reprehenderit quibusdam quod?
-          Labore, aliquid illo.
+          <%= data.nama %> <br />Ubah Nama Tempat, Kategori maupun Isi jika
+          terjadi kesalahan. Maaf kami tidak menyediakan edit Foto Cover karena
+          terbatasnya biaya
         </p>
       </div>
       <div class="main">
         <form
-          action="/dashboard/maps/add"
+          action="/dashboard/place/<%= data.id %>/edit"
           enctype="multipart/form-data"
           method="post"
         >
@@ -40,7 +41,7 @@
                 type="hidden"
                 name="provinsir"
                 id="provinsir"
-                value="ACEH"
+                value="<%= data.provinsi %>"
               />
               <input
                 type="hidden"
@@ -50,33 +51,23 @@
               <input type="hidden" name="email" value="<%= email %>" />
               <input type="hidden" name="name" value="<%= name %>" />
               <input type="hidden" name="userId" value="<%= userId %>" />
-              <input type="hidden" name="render" value="dashboard/post_place" />
+              <input type="hidden" name="render" value="dashboard/place/edit" />
               <input type="hidden" name="nom" value="plc" />
+              <input type="hidden" name="target" value="place" />
+              <input type="hidden" name="msg" value="Edit" />
             </div>
           </div>
           <div class="input-group">
             <label for="title" class="title">Nama Tempat</label>
-            <input type="text" id="title" name="title" required />
-            <span class="note">Lorem ipsum dolor sit amet.</span>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              value="<%= data.nama %>"
+            />
           </div>
-          <div class="input-group">
-            <label for="photo" class="title">Foto Tempat</label>
-            <div class="file-zone">
-              <p class="uplace">Drop file here or click to upload</p>
-              <input type="file" name="photo" id="photo" required />
-            </div>
-            <span class="note">Lorem ipsum dolor sit amet.</span>
-          </div>
-          <div class="input-group input-row">
-            <div class="input-col">
-              <label for="provinsi" class="title">Provinsi</label>
-              <select id="provinsi" name="provinsi" required></select>
-            </div>
-            <div class="input-col">
-              <label for="kabupaten" class="title">kabupaten</label>
-              <select id="kabupaten" name="kabupaten" required></select>
-            </div>
-          </div>
+
           <div class="input-group input-row">
             <div class="input-col">
               <label for="jenis" class="title">jenis tempat</label>
@@ -104,18 +95,31 @@
           </div>
           <div class="input-group">
             <label for="desc" class="title">Deskripsi Singkat</label>
-            <textarea name="desc" id="desc"></textarea>
+            <textarea name="desc" id="desc">
+              <%= data.deskripsi.trim() %>
+            </textarea>
           </div>
           <div class="input-group">
             <label for="contact" class="title">Kontak Pengelola</label>
-            <input type="text" id="contact" name="contact" />
+            <input
+              type="text"
+              id="contact"
+              name="contact"
+              value="<%= data.notel %>"
+            />
             <span class="note"
               >Disarankan Berupa Nomor Telpon WhatsApp atau Media Sosial</span
             >
           </div>
           <div class="input-group">
             <label for="link" class="title">Link Google Maps</label>
-            <input type="text" id="link" name="link" required />
+            <input
+              type="text"
+              id="link"
+              name="link"
+              required
+              value="<%= data.link %>"
+            />
             <span class="note"
               >Input link seperti https://maps.app.goo.gl/aa4maRpb
             </span>
@@ -130,6 +134,5 @@
       </div>
     </section>
     <script src="/js/drag.js"></script>
-    <script src="/js/select.js"></script>
   </body>
 </html>

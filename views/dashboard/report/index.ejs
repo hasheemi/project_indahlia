@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Pantau Laporan</title>
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/blog.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Lihat Laporan Yang Anda Kirimkan</h2>
+        <p>
+          Periksa secara berkala apakah sudah diteruskan ke pihak yang berwenang
+          atau belum, jika dirasa terlalu lama atau sangat darurat anda bisa
+          menghubungi kontak kami
+        </p>
+      </div>
+
+      <div class="content">
+        <% post.forEach((e,i) => { %>
+        <div class="box">
+          <div class="thumb">
+            <img src="<%= e.img %>" alt="" />
+          </div>
+          <div class="desc">
+            <h4><%= e.judul %></h4>
+            <span><%= e.jenis %></span>
+            <span
+              ><%= e.kabupaten.toLowerCase() %>, <%= e.provinsi.toLowerCase()
+              %></span
+            >
+          </div>
+          <div class="action">
+            <span class="status"><%= e.status %></span>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <a href="/dashboard/report/add">
+        <button><i class="bi bi-plus-lg"></i> Buat Laporan Baru</button>
+      </a>
+    </section>
+  </body>
+</html>

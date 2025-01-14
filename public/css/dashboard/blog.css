@@ -1,10 +1,11 @@
 .head h2 {
   font-size: 40px;
+  margin: 10px 0;
 }
 .head p {
-  font-size: 12px;
-  width: 40%;
-  margin: 10px 0;
+  font-size: 13px;
+  width: 50%;
+  margin: 10px 0 30px;
 }
 .content {
   width: 80%;
@@ -12,7 +13,7 @@
 .content .box {
   width: 100%;
   display: flex;
-  margin: 20px 0;
+  margin: 25px 0;
   gap: 20px;
   background: white;
   padding: 10px 20px;
@@ -20,15 +21,28 @@
   box-shadow: 0 4px 15px rgba(32, 32, 32, 0.135);
   align-items: center;
 }
+.content .box.child {
+  width: 90%;
+  margin-left: auto;
+}
+.content button.small {
+  margin-left: auto;
+}
 .content .thumb {
   width: 12%;
 }
 .content .thumb img {
   width: 100%;
   aspect-ratio: 16/9;
+  object-fit: cover;
 }
 .content .desc {
-  width: 25%;
+  width: 35%;
+}
+.content .desc span {
+  display: block;
+  margin: 5px 0;
+  text-transform: capitalize !important;
 }
 .content .action {
   width: 25%;
@@ -48,11 +62,24 @@
   background: var(--blue);
   color: white;
 }
+.content .action .btn.edit {
+  background-color: rgb(251, 145, 31);
+}
+.content .action .btn.delete {
+  background-color: rgb(212, 11, 11);
+}
+.content .action .status {
+  background-color: rgb(223, 20, 20);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 30px;
+}
 button {
   padding: 15px 30px;
   display: flex;
   align-items: center;
   gap: 10px;
+  margin: 20px 0;
   /* border-radius: 12px; */
 }
 button i {

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Tambahkan Kelas Baru</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/form.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Tambahkan Kelas Baru</h2>
+        <p>
+          Kelas Bertema Lingkungan hidup sebagai bahan untuk mencetak generasi
+          yang sadar pentingnya lingkungan bagi kita dan manusia
+        </p>
+      </div>
+      <div class="main">
+        <form
+          action="/dashboard/class/add"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="input-group">
+            <div class="alpha">
+              <input type="hidden" name="slug" id="slug" />
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="render" value="dashboard/class/post" />
+              <input type="hidden" name="nom" value="cls" />
+              <input type="hidden" name="youtube" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="title" class="title">judul kelas</label>
+            <input type="text" id="title" name="title" required />
+            <span class="note">Buat judul kelas yang menarik</span>
+          </div>
+          <div class="input-group">
+            <label for="photo" class="title">Foto Cover</label>
+            <div class="file-zone">
+              <p class="uplace">Drop file here or click to upload</p>
+              <input type="file" name="photo" id="photo" required />
+            </div>
+            <span class="note"
+              >Upload foto cover/thumbnail untuk detail (JPEG,JPG,PNG)</span
+            >
+          </div>
+          <div class="input-group">
+            <label for="banner" class="title">Foto Banner</label>
+            <div class="file-zone">
+              <p class="uplace">Drop file here or click to upload</p>
+              <input type="file" name="banner" id="banner" required />
+            </div>
+            <span class="note"
+              >Upload banner untuk dipakai semua materi dalam kelas
+              (JPEG,JPG,PNG)</span
+            >
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="category" class="title">kategori</label>
+              <select id="category" name="category" required>
+                <option value="konservasi">Konservasi</option>
+                <option value="keanekaragaman-hayati">
+                  Keanekaragaman Hayati
+                </option>
+                <option value="sampah">Pengelolaan Sampah</option>
+                <option value="energi-terbarukan">Energi Terbarukan</option>
+                <option value="perubahan-iklim">Perubahan Iklim</option>
+                <option value="kesehatan-lingkungan">
+                  Kesehatan Lingkungan
+                </option>
+                <option value="hutan">Pelestarian Hutan</option>
+                <option value="pertanian">Pertanian / Peternakan</option>
+              </select>
+            </div>
+            <div class="input-col">
+              <label for="level" class="title">Tingkat Kesulitan</label>
+              <select id="level" name="level" required>
+                <option value="pemula">Pemula</option>
+                <option value="medium">Medium</option>
+                <option value="ahli">Ahli</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="video" class="title">Link Video Youtube</label>
+              <input type="text" id="video" name="video" required />
+              <span class="note"
+                >Pastikan Video anda sudah muncul di preview</span
+              >
+            </div>
+            <div class="input-col">
+              <label for="" class="title">Preview Video</label>
+              <iframe
+                src="https://www.youtube.com/embed/3nQNiWdeH2Q?si=EYQDVZ2SpJT--n3l"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="title">Isi Artikel</label>
+            <input type="hidden" name="myquil" id="myquil" />
+            <div id="editor">
+              <p>Halo! Dunia</p>
+              <p>Saya Peduli <strong>Lingkungan</strong></p>
+              <p><br /></p>
+            </div>
+            <span class="note">Tulis silabus atau pengantar kelas</span>
+          </div>
+          <div class="button-group">
+            <button type="reset" class="reset">
+              <i class="bi bi-trash"></i> Reset
+            </button>
+            <button type="submit"><i class="bi bi-send"></i> Posting</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script src="/js/drag.js"></script>
+    <script src="/js/slug.js"></script>
+    <script>
+      var toolbarOptions = [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }], // Headers 1-6
+        ["bold", "italic", "underline"], // Basic text formatting
+        ["blockquote", { script: "super" }, { script: "sub" }], // Blockquote, superscript, subscript
+        [{ list: "ordered" }, { list: "bullet" }], // Lists
+        [{ align: [] }], // Alignment
+        ["image"], // Image upload
+        ["clean"], // Clear formatting
+      ];
+
+      // Initialize Quill editor
+      var quill = new Quill("#editor", {
+        theme: "snow",
+        modules: {
+          toolbar: toolbarOptions,
+        },
+      });
+      const toolbar = quill.getModule("toolbar");
+      toolbar.addHandler("image", function () {
+        const url = prompt("Enter the image URL:");
+        if (url) {
+          const range = quill.getSelection(); // Get current cursor position
+          quill.insertEmbed(range.index, "image", url); // Insert image
+        }
+      });
+
+      quill.on("text-change", function () {
+        var htmlContent = quill.root.innerHTML;
+        document.querySelector("#myquil").value = htmlContent;
+      });
+
+      function convertToEmbedLink(url) {
+        const urlPattern =
+          /(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch\?v=|embed\/|v\/|.+\?v=)?([^&\s?]+)/;
+        const match = url.match(urlPattern);
+
+        if (match && match[1]) {
+          const videoId = match[1];
+          return `https://www.youtube.com/embed/${videoId}`;
+        } else {
+          return "https://www.youtube.com/embed/3nQNiWdeH2Q?si=EYQDVZ2SpJT--n3l";
+        }
+      }
+      // document.querySelector("input#video")((e) => {
+
+      // });
+      // console.log();
+      const videoInput = document.querySelector("input#video");
+      if (videoInput) {
+        videoInput.addEventListener("input", function (event) {
+          document
+            .querySelector("iframe")
+            .setAttribute("src", convertToEmbedLink(videoInput.value));
+          document.querySelector("input[name='youtube']").value =
+            convertToEmbedLink(videoInput.value);
+        });
+      } else {
+        console.error("Input with ID 'video' not found.");
+      }
+      // document.getElementById("submit").onclick = () => {
+      //   document.getElementById("res").value = `${quill.root.innerHTML}`;
+      // };
+    </script>
+  </body>
+</html>

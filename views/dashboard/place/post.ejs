@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%- include('../../components/exstyles') %>
+    <title>Posting Destinasi WIsata Alam</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <link rel="stylesheet" href="/css/theme.css" />
+    <link rel="stylesheet" href="/css/dashboard/form.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+  <body>
+    <%- include('../../components/sidebar',{profile}) %>
+    <section class="home-section">
+      <div class="head">
+        <h2>Tambah Destinasi Wisata Alam</h2>
+        <p>
+          Promosikan tempat wisata alam di daerah anda sebagai bentuk
+          melestarikan budaya dan kekayaan alam serta menjaga lingkungan
+        </p>
+      </div>
+      <div class="main">
+        <form
+          action="/dashboard/place/add"
+          enctype="multipart/form-data"
+          method="post"
+        >
+          <div class="input-group">
+            <div class="alpha">
+              <input
+                type="hidden"
+                name="provinsir"
+                id="provinsir"
+                value="ACEH"
+              />
+              <input
+                type="hidden"
+                name="date"
+                value="<%= new Date().getTime(); %>"
+              />
+              <input type="hidden" name="email" value="<%= email %>" />
+              <input type="hidden" name="name" value="<%= name %>" />
+              <input type="hidden" name="userId" value="<%= userId %>" />
+              <input type="hidden" name="render" value="dashboard/place/post" />
+              <input type="hidden" name="nom" value="plc" />
+              <input type="hidden" name="target" value="place" />
+              <input type="hidden" name="msg" value="Tambah" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="title" class="title">Nama Tempat</label>
+            <input type="text" id="title" name="title" required />
+          </div>
+          <div class="input-group">
+            <label for="photo" class="title">Foto Tempat</label>
+            <div class="file-zone">
+              <p class="uplace">Drop file here or click to upload</p>
+              <input type="file" name="photo" id="photo" required />
+            </div>
+            <span class="note"
+              >Upload foto terbaik dari destinasi tersebut (JPEG,JPG,PNG)</span
+            >
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="provinsi" class="title">Provinsi</label>
+              <select id="provinsi" name="provinsi" required></select>
+            </div>
+            <div class="input-col">
+              <label for="kabupaten" class="title">kabupaten</label>
+              <select id="kabupaten" name="kabupaten" required></select>
+            </div>
+          </div>
+          <div class="input-group input-row">
+            <div class="input-col">
+              <label for="jenis" class="title">jenis tempat</label>
+              <select id="jenis" name="jenis" required>
+                <option value="sungai">sungai</option>
+                <option value="danau">danau</option>
+                <option value="telaga">telaga</option>
+                <option value="air terjun">air terjun</option>
+                <option value="pantai">pantai</option>
+                <option value="sabana">sabana</option>
+                <option value="taman">taman</option>
+              </select>
+            </div>
+            <div class="input-col">
+              <label for="lingkungan" class="title">tingkat kebersihan</label>
+              <select id="lingkungan" name="lingkungan" required>
+                <option value="semua bersih">semua bersih</option>
+                <option value="sebagian bersih">sebagian bersih</option>
+                <option value="tercemar sampah">tercemar sampah</option>
+                <option value="tercemar limbah pabrik">
+                  tercemar limbah pabrik
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="desc" class="title">Deskripsi Singkat</label>
+            <textarea name="desc" id="desc"></textarea>
+            <span class="note">Tulis Deskripsi singkat saja</span>
+          </div>
+          <div class="input-group">
+            <label for="contact" class="title">Kontak Pengelola</label>
+            <input type="text" id="contact" name="contact" />
+            <span class="note"
+              >Disarankan Berupa Nomor Telpon WhatsApp atau Media Sosial</span
+            >
+          </div>
+          <div class="input-group">
+            <label for="link" class="title">Link Google Maps</label>
+            <input type="text" id="link" name="link" required />
+            <span class="note"
+              >Input link seperti https://maps.app.goo.gl/aa4maRpb
+            </span>
+          </div>
+          <div class="button-group">
+            <button type="reset" class="reset">
+              <i class="bi bi-trash"></i> Reset
+            </button>
+            <button type="submit"><i class="bi bi-send"></i> Posting</button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <script src="/js/drag.js"></script>
+    <script src="/js/select.js"></script>
+  </body>
+</html>

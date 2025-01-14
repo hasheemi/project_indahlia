@@ -74,7 +74,25 @@ section.layout {
 .layout h2 {
   font-size: var(--heading-sec-size);
 }
-
+p a {
+  color: rgb(2, 97, 156);
+}
+.summary {
+  font-family: var(--body-font);
+  background: #d4d4ec;
+  width: 90%;
+  margin: 10px 0;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 16px;
+}
+.summary .head {
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  /* padding: 5; */
+}
 /* Styling for Tablet and IPad */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   section.layout {

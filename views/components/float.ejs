@@ -1,0 +1,51 @@
+<div class="floating-buttons">
+  <!-- Button to /assistant -->
+  <a href="/assistant" class="btn-circle btn-robot">
+    <i class="bi bi-robot"></i>
+  </a>
+  <!-- Scroll to top button -->
+  <button class="btn-circle btn-top" onclick="scrollToTop()">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+</div>
+
+<style>
+  .floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-circle {
+    width: 60px;
+    height: 60px;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    text-decoration: none;
+  }
+  button.btn-circle {
+    padding: 0 !important;
+  }
+
+  .btn-circle:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+</style>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>

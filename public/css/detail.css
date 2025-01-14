@@ -2,13 +2,6 @@
   color: aliceblue;
   width: 100vw;
   min-height: 60vh;
-  background-image: linear-gradient(
-      to bottom,
-      rgb(0, 0, 0),
-      rgba(0, 0, 0, 0.342) 55%,
-      rgb(0, 0, 0)
-    ),
-    url("/img/leaf.jpg");
   background-size: cover;
   background-position: center;
   position: relative;
@@ -68,16 +61,23 @@
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   background: white;
+  text-transform: capitalize;
 }
 .about .box span {
   display: block;
   margin: 3px;
+}
+.about .box span i {
+  margin-right: 5px;
 }
 .about .box .what {
   color: gray;
 }
 .about .box .ans {
   font-weight: 700;
+}
+.materi p {
+  margin: 5px 0;
 }
 .switch {
   display: flex;

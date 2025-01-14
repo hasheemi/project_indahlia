@@ -1,7 +1,7 @@
 const cheerio = require("cheerio");
 
 function extractTextFromHTML(req, res, next) {
-  if (!req.body.myquill) {
+  if (!req.body.myquil) {
     res.render(`${req.body.render}.ejs`, {
       err: "Failed to make snippet",
     });

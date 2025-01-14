@@ -92,7 +92,7 @@
 }
 .activity .record .list {
   width: 80%;
-  border: 0.3px solid rgba(36, 35, 35, 0.609);
+  box-shadow: 0 4px 15px rgba(32, 32, 32, 0.316);
   border-radius: 12px;
   padding: 5px 10px;
   margin: 15px;

@@ -12,7 +12,9 @@ async function createSummary(req, res, next) {
     Buatlah satu paragraf singkat rangkuman dari teks diatas
     `;
   const result = await model.generateContent(prompt);
-  req.body.summary = await result;
+  req.body.summary = await result.response.candidates[0].content.parts[0].text;
+  console.log("mysumm");
+  console.log(req.params);
   next();
 }
 
